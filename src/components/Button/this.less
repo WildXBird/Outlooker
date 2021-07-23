@@ -1,0 +1,57 @@
+.outlooker-button {
+  user-select: none;
+  background-color: unset;
+  padding: unset;
+  border: unset;
+
+  > div {
+    transition: background-color 0.467s cubic-bezier(0.1, 0.9, 0.2, 1) 34ms;
+  }
+
+  .svgIcon {
+    width: 16px;
+    height: 16px;
+
+    > svg {
+      vertical-align: top;
+    }
+  }
+}
+
+.outlooker-button:not(.BorderlessButton):not(.LeftBarsButton) {
+  &:hover {
+    color: #ffffff;
+    background-color: #005a9e;
+  }
+
+  &:focus {
+    border: 1px white solid;
+  }
+
+  &:active {
+    background-color: #004578;
+  }
+}
+
+.LeftBarsButton {
+  &.LeftBarsButton-active {
+    background-color: var(--neutralLighterAlt);
+    position: relative;
+    color: var(--themePrimary);
+
+    &:before {
+      left: 4px;
+      background-color: var(--themePrimary);
+      border-radius: 2px;
+      content: '';
+      top: 8px;
+      width: 2px;
+      position: absolute;
+      height: 70%;
+    }
+  }
+
+  &:hover {
+    background-color: var(--neutralLighterAlt);
+  }
+}
