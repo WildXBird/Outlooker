@@ -18,7 +18,7 @@
   }
 }
 
-.outlooker-button:not(.BorderlessButton):not(.LeftBarsButton) {
+.outlooker-button:not(.BorderlessButton):not(.LeftBarsButton):not(.LightButton) {
   &:hover {
     color: #ffffff;
     background-color: #005a9e;
@@ -53,5 +53,31 @@
 
   &:hover {
     background-color: var(--neutralLighterAlt);
+  }
+}
+
+.LightButton {
+  color: var(--themeDark);
+
+  &:hover {
+    background-color: var(--neutralLight);
+  }
+
+  &:active {
+    background-color: var(--neutralQuaternaryAlt);
+  }
+}
+
+.PrimaryButton {
+  color: var(--white);
+  background-color: var(--themePrimary);
+  border-radius: 2px;
+  font-weight: 600;
+  &:hover {
+    // background-color: var(--neutralLight);
+  }
+
+  &:active {
+    // background-color: var(--neutralQuaternaryAlt);
   }
 }

@@ -1,8 +1,4 @@
-import { Input } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import styles from './global.less';
-import { IconButton, LeftBarsButton } from '../components/Button';
-
+import { LeftBarsButton } from '../components/Button';
 import { ReactComponent as WordLogo } from '../assets/picture/svg/word.svg';
 import { ReactComponent as ExcelLogo } from '../assets/picture/svg/excel.svg';
 import { ReactComponent as PowerPointLogo } from '../assets/picture/svg/powerPoint.svg';
@@ -22,7 +18,7 @@ export default function IndexPage(props) {
       style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
     >
       <div
-        className={'leftBar leftBar-left'}
+        className={'leftBar-left'}
         style={{
           width: 48,
           height: '100%',
@@ -59,6 +55,7 @@ export default function IndexPage(props) {
         </LeftBarsButton>
       </div>
       <div
+        className={'leftBar-right'}
         style={{
           width: 'calc(100% - 48px)',
           height: '100%',

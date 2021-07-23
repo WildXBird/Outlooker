@@ -25,8 +25,19 @@ export default defineConfig({
             },
             {
               path: './0',
-              component: '@/pages/mail.js',
-              routes: [],
+              component: '@/pages/mail',
+              routes: [
+                {
+                  path: './',
+                  exact: true,
+                  redirect: './inbox',
+                },
+                {
+                  path: './inbox',
+                  component: '@/pages/mail/inbox',
+                  routes: [],
+                },
+              ],
             },
           ],
         },

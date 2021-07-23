@@ -58,4 +58,16 @@ let LeftBarsButton = function IndexPage(props) {
   }
   return IconButton({ ...props, style }, className);
 };
-export { IconButton, BorderlessButton, LeftBarsButton };
+let LightButton = function IndexPage(props) {
+  return IconButton(props, 'LightButton');
+};
+let PrimaryButton = function IndexPage(props) {
+  return IconButton(props, 'PrimaryButton');
+};
+export {
+  IconButton,
+  BorderlessButton,
+  LeftBarsButton,
+  LightButton,
+  PrimaryButton,
+};
