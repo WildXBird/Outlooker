@@ -10,8 +10,17 @@
 
   .mailBox-content {
     .mailBox-content-left {
+      background-color: var(--neutralLighter);
+
       .mailBox-content-left-menu {
         height: calc(100% - 59px);
+        padding-top: 8px;
+        overflow: overlay;
+        &::-webkit-scrollbar {
+          width: 0px;
+          height: 0px;
+          background-color: #f5f5f5;
+        }
       }
 
       .mailBox-content-left-ad {

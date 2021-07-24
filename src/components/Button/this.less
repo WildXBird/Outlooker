@@ -3,7 +3,7 @@
   background-color: unset;
   padding: unset;
   border: unset;
-
+  transition: background-color 0.467s cubic-bezier(0.1, 0.9, 0.2, 1) 34ms;
   > div {
     transition: background-color 0.467s cubic-bezier(0.1, 0.9, 0.2, 1) 34ms;
   }
@@ -18,7 +18,7 @@
   }
 }
 
-.outlooker-button:not(.BorderlessButton):not(.LeftBarsButton):not(.LightButton) {
+.outlooker-button:not(.BorderlessButton):not(.LeftBarsButton):not(.LightButton):not(.PrimaryButton) {
   &:hover {
     color: #ffffff;
     background-color: #005a9e;
@@ -35,7 +35,7 @@
 
 .LeftBarsButton {
   &.LeftBarsButton-active {
-    background-color: var(--neutralLighterAlt);
+    // background-color: var(--neutralLighterAlt);
     position: relative;
     color: var(--themePrimary);
 
@@ -74,10 +74,10 @@
   border-radius: 2px;
   font-weight: 600;
   &:hover {
-    // background-color: var(--neutralLight);
+    background-color: var(--themeDark);
   }
 
   &:active {
-    // background-color: var(--neutralQuaternaryAlt);
+    background-color: var(--themeDarker);
   }
 }

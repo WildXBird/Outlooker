@@ -1,0 +1,78 @@
+.outlooker-components-SubMenu {
+  margin-bottom: 2px;
+  cursor: pointer;
+
+  .outlooker-components-SubMenu-title {
+    height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  .outlooker-components-SubMenu-children {
+    height: 0px;
+    overflow: hidden;
+  }
+
+  &.outlooker-components-SubMenu-unfold {
+    .outlooker-components-SubMenu-children {
+      height: unset;
+    }
+  }
+}
+
+.outlooker-components-Item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-right: 28px;
+  cursor: pointer;
+  color: var(--neutralSecondary);
+  margin-bottom: 1px;
+  &:hover {
+    background-color: var(--neutralLight);
+  }
+
+  .outlooker-components-Item-icon {
+    display: inline-block;
+    width: 48px;
+  }
+
+  .outlooker-components-Item-title {
+    display: inline-block;
+    padding-left: 10px;
+    width: calc(100% - 48px);
+
+    .outlooker-components-Item-title-innner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      .outlooker-components-Item-title-innner-count {
+        font-family: auto;
+      }
+    }
+  }
+
+  &.outlooker-components-Item-primary {
+    .outlooker-components-Item-title-innner-count {
+      font-weight: 600;
+      color: var(--themeDark);
+    }
+  }
+
+  &.outlooker-components-Item-actived {
+    background-color: var(--themeLight);
+    color: var(--themeDark);
+
+    .outlooker-components-Item-title {
+      font-weight: 600;
+    }
+
+    // &.outlooker-components-Item-primary {
+    //     .outlooker-components-Item-title-innner-count {
+    //         color: var(--themeDark);
+    //     }
+    // }
+  }
+}

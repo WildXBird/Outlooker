@@ -1,5 +1,7 @@
 import './index.less';
 import { LightButton, PrimaryButton } from '../../components/Button';
+import Menu from './menu';
+import { MenuAD } from '../../components/AD';
 
 export default function IndexPage(props) {
   let show_HideListButtonStyle = {
@@ -11,6 +13,7 @@ export default function IndexPage(props) {
   };
   let newMailButtonStyle = {
     ...show_HideListButtonStyle,
+    fontFamily: 'auto',
     height: 32,
     width: 88,
   };
@@ -47,7 +50,7 @@ export default function IndexPage(props) {
             }}
           >
             <PrimaryButton style={newMailButtonStyle}>
-              <span>{'新建邮件'}</span>
+              {'新建邮件'}
             </PrimaryButton>
           </div>
         </div>
@@ -80,8 +83,12 @@ export default function IndexPage(props) {
             verticalAlign: 'top',
           }}
         >
-          <div className={'mailBox-content-left-menu'}>456</div>
-          <div className={'mailBox-content-left-ad'}>789</div>
+          <div className={'mailBox-content-left-menu'}>
+            <Menu />
+          </div>
+          <div className={'mailBox-content-left-ad'}>
+            <MenuAD />
+          </div>
         </div>
         <div
           className={'mailBox-content-right'}
