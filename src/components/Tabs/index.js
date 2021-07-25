@@ -35,7 +35,7 @@ Tabs.TabPane = function TabPane(props) {
         props.itemKey == props.selectedKey ? 'outlooker-Tabs-tab-actived' : ''
       }`}
     >
-      {props.tab}
+      <div style={{ position: 'relative', top: 0 }}>{props.tab}</div>
       <div className={'outlooker-Tabs-tab-underline'} />
     </div>
   );
