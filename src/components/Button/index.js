@@ -17,10 +17,13 @@ let IconButton = function IndexPage(props, buttonTypeText = 'IconButton') {
       break;
   }
   typeof buttonTypeText !== 'string' ? (buttonTypeText = 'IconButton') : '';
+
   return (
     <>
       <button
-        className={`outlooker-button ${buttonTypeText} `}
+        className={`outlooker-button ${buttonTypeText} ${
+          props.disabled ? 'outlooker-button-disabled' : ''
+        } `}
         style={{
           display: 'inline-block',
           textAlign: 'center',

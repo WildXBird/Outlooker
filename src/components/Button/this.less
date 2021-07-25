@@ -16,6 +16,12 @@
       vertical-align: top;
     }
   }
+  &.outlooker-button-disabled {
+    pointer-events: none;
+    * {
+      color: var(--neutralTertiaryAlt) !important;
+    }
+  }
 }
 
 .outlooker-button:not(.BorderlessButton):not(.LeftBarsButton):not(.LightButton):not(.PrimaryButton) {

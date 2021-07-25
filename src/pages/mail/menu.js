@@ -31,7 +31,7 @@ export default function IndexPage(props) {
         <Menu.Item key="4" icon={''}>
           {'草稿'}
         </Menu.Item>
-        <Menu.Item key="4" icon={''}>
+        <Menu.Item key="40999" icon={''}>
           {'已删除邮件'}
         </Menu.Item>
         <Menu.Item key="5">

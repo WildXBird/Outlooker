@@ -33,22 +33,31 @@ Menu.SubMenu = class Menu_SubMenu extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
+    this.onClick = () => {
+      // alert("1")
+      this.setState({ unfold: !!!this.state.unfold });
+    };
+  }
+  componentDidMount() {
+    React.Children.map(this.props.children, (child) => {
+      if (
+        typeof this.state.unfold === 'undefined' &&
+        child.key === this.props.selectedKey
+      ) {
+        this.setState({ unfold: true });
+      }
+    });
   }
   render() {
+    console.log('0', this.state);
     let props = this.props;
-    let defaultUnfold = false;
     const childrenWithProps = React.Children.map(props.children, (child) => {
-      console.log('React.Children', child);
-      if (child.key === props.selectedKey) {
-        defaultUnfold = true;
-      }
       return React.cloneElement(child, {
         ...child.props,
         selectedKey: props.selectedKey,
         itemKey: child.key,
       });
     });
-    defaultUnfold = true;
     let arrowStyle = {
       height: '100%',
       width: '100%',
@@ -59,10 +68,13 @@ Menu.SubMenu = class Menu_SubMenu extends PureComponent {
     return (
       <div
         className={`outlooker-components-SubMenu ${
-          defaultUnfold ? 'outlooker-components-SubMenu-unfold' : ''
+          this.state.unfold ? 'outlooker-components-SubMenu-unfold' : ''
         }`}
       >
-        <div className="outlooker-components-SubMenu-title">
+        <div
+          className="outlooker-components-SubMenu-title"
+          onClick={this.onClick}
+        >
           <div style={{ display: 'inline-block', width: 48 }}>
             <BorderlessButton style={arrowStyle}>{''}</BorderlessButton>
           </div>
