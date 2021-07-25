@@ -1,9 +1,89 @@
-.MenuAD {
-  .MenuAD-text {
-    font-size: 0.8125rem !important;
-    line-height: 1.3;
+.outlooker-article-list {
+  .outlooker-article-list-dateHr {
+    height: 40px;
+    padding-left: 72px;
+    background-color: var(--neutralLighterAlt);
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
     color: var(--neutralPrimary);
-    padding: 12px 40px 15px 0;
-    font-family: auto;
+    align-items: center;
+  }
+
+  ul {
+    margin-top: unset;
+    margin-bottom: unset;
+    display: unset;
+    list-style-type: unset;
+    margin-block-start: unset;
+    margin-block-end: unset;
+    margin-inline-start: unset;
+    margin-inline-end: unset;
+    padding-inline-start: unset;
+
+    li {
+      height: 40px;
+      display: block;
+      list-style-type: unset;
+      text-align: unset;
+      background-color: var(--white);
+
+      .outlooker-article-list-layout-left {
+        display: inline-block;
+        width: 332px;
+        height: 100%;
+      }
+
+      .outlooker-article-list-layout-right {
+        display: inline-block;
+        width: calc(100% - 332px);
+        height: 100%;
+
+        .outlooker-article-list-layout-right-holder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .outlooker-article-list-time {
+            width: 150px;
+          }
+
+          .outlooker-article-list-content {
+            width: calc(100% - 150px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            .outlooker-article-list-title,
+            outlooker-article-list-description {
+              display: inline-block;
+            }
+
+            .outlooker-article-list-title {
+            }
+
+            .outlooker-article-list-description {
+              padding-left: 12px;
+            }
+          }
+        }
+      }
+
+      &.outlooker-article-list-content-unread {
+        .outlooker-article-list-title {
+          color: var(--themePrimary);
+          font-weight: 600;
+          font-family: auto;
+        }
+
+        &.outlooker-article-list-content-selected {
+          .outlooker-article-list-title {
+            color: var(--themeDark);
+          }
+        }
+      }
+    }
   }
 }
