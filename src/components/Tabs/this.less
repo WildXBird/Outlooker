@@ -1,92 +1,101 @@
 .outlooker-Tabs {
-  padding-top: 13px;
-  // padding-bottom: 2px;
-  padding-right: 24px;
-  height: 40px;
-  height: 56px;
-  height: 57px;
-  border-bottom: 1px solid var(--neutralLight);
+  height: 100%;
 
-  .outlooker-Tabs-bar-checkbox {
-    display: inline-block;
-    font-family: ShellFabricMDL2IconsLite, ShellFabricMDL2Icons, controlIcons;
-    font-size: 16px;
-    vertical-align: top;
-    height: 100%;
-    width: 39px;
+  .outlooker-Tabs-bar {
+    padding-top: 13px;
+    // padding-bottom: 2px;
+    padding-right: 24px;
+    height: 40px;
+    height: 56px;
+    height: 57px;
+    border-bottom: 1px solid var(--neutralLight);
 
-    .outlooker-Tabs-bar-checkbox-inside {
-      width: 18px;
-      height: 18px;
-      position: relative;
-      vertical-align: top;
-      margin-left: 17px;
-      margin-bottom: 8px;
-      margin-top: 9px;
-
-      .checkbox-CircleRing,
-      .checkbox-StatusCircleCheckmark {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        vertical-align: top;
-        line-height: 18px;
-        font-style: normal;
-      }
-
-      .checkbox-StatusCircleCheckmark {
-        font-size: 16px;
-        left: 1.5px;
-        top: -1px;
-      }
-    }
-  }
-
-  .outlooker-Tabs-bar-nav-list {
-    display: inline-block;
-    width: calc(100% - 39px);
-    height: 100%;
-
-    .outlooker-Tabs-tab {
+    .outlooker-Tabs-bar-checkbox {
       display: inline-block;
-      position: relative;
+      font-family: ShellFabricMDL2IconsLite, ShellFabricMDL2Icons, controlIcons;
+      font-size: 16px;
+      vertical-align: top;
       height: 100%;
-      // margin-left: 5px;
-      margin-left: 7px;
-      margin-right: 8px;
-      padding-left: 7px;
-      padding-right: 7px;
-      line-height: 36px;
+      width: 39px;
       cursor: pointer;
 
-      &:hover {
-        background-color: var(--neutralLighter);
-      }
+      .outlooker-Tabs-bar-checkbox-inside {
+        width: 18px;
+        height: 18px;
+        position: relative;
+        vertical-align: top;
+        margin-left: 17px;
+        margin-bottom: 8px;
+        margin-top: 9px;
 
-      &.outlooker-Tabs-tab-actived {
-        font-weight: 600;
-
-        .outlooker-Tabs-tab-underline {
+        .checkbox-CircleRing,
+        .checkbox-StatusCircleCheckmark {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
           position: absolute;
-          bottom: 0px;
-          height: 4px;
-          background-color: var(--themePrimary);
-          left: 7px;
-          right: 7px;
-          transition: left 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9) 0s,
-            right 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9) 0s;
+          top: 0;
+          left: 0;
+          vertical-align: top;
+          line-height: 18px;
+          font-style: normal;
         }
 
+        .checkbox-StatusCircleCheckmark {
+          font-size: 16px;
+          left: 1.5px;
+          top: -1px;
+        }
+      }
+    }
+
+    .outlooker-Tabs-bar-nav-list {
+      display: inline-block;
+      width: calc(100% - 39px);
+      height: 100%;
+
+      .outlooker-Tabs-tab {
+        display: inline-block;
+        position: relative;
+        height: 100%;
+        // margin-left: 5px;
+        margin-left: 7px;
+        margin-right: 8px;
+        padding-left: 7px;
+        padding-right: 7px;
+        line-height: 36px;
+        cursor: pointer;
+
         &:hover {
+          background-color: var(--neutralLighter);
+        }
+
+        &.outlooker-Tabs-tab-actived {
+          font-weight: 600;
+
           .outlooker-Tabs-tab-underline {
-            left: 0px;
-            right: 0px;
+            position: absolute;
+            bottom: 0px;
+            height: 4px;
+            background-color: var(--themePrimary);
+            left: 7px;
+            right: 7px;
+            transition: left 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9) 0s,
+              right 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9) 0s;
+          }
+
+          &:hover {
+            .outlooker-Tabs-tab-underline {
+              left: 0px;
+              right: 0px;
+            }
           }
         }
       }
     }
+  }
+  .outlooker-Tabs-content {
+    height: calc(100% - 57px);
+    overflow: overlay;
   }
 }
