@@ -11,7 +11,7 @@ export default function Inbox(props) {
         alert("h")
       }}>
         <Tabs.TabPane tab={'重点'} key="1">
-          <RSS  onClick={(data)=>{
+          <RSS onClick={(data)=>{
             console.log("a",data)
           }}/>
         </Tabs.TabPane>
