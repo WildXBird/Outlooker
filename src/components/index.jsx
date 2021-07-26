@@ -4,11 +4,14 @@ import { Layout } from 'antd';
 import HeaderContent from './header';
 import LeftBar from './leftBar';
 import { RightAD } from "../components/AD"
+import GlobalDataManager from "./GlobalDataManager"
+
 export default function IndexPage(props) {
   let a = 1;
   const { Header, Footer, Content, Sider } = Layout;
   return (
     <>
+      <GlobalDataManager />
       <Header
         className={styles.header}
         style={{

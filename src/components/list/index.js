@@ -10,29 +10,33 @@ class List extends PureComponent {
     this.state = {
       articleList: [],
     };
-    this.onClick = () => {};
+    this.onClick = () => { };
   }
   componentDidMount() {
     let Fthis = this;
     let articleList = this.state.articleList;
-    //
-    function htmlDecode(text) {
-      var temp = document.createElement('div'); //创建一个容器标签元素
-      temp.innerHTML = text; //将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
-      var output = temp.innerText || temp.textContent; //innerText(ie支持),textContent(火狐，google支持)
-      temp = null;
-      return output;
+    this.globalDataUpdater = function (data) {
+      Fthis.setState({ articleList: data, ts: Math.random() });
     }
-    //
-    parse('https://outlooker-rssproxy.r6sg.workers.dev/ithome').then((rss) => {
-      for (let item of rss.items) {
-        item.html = htmlDecode(item.description);
-        item.description = htmlDecode(item.html);
-        articleList.push({ ...item, dataSource: 'ithome' });
-      }
-      Fthis.setState({ articleList, ts: Math.random() });
-      console.log(Fthis.state);
-    });
+    addDataListener(this.globalDataUpdater)
+    // //
+    // function htmlDecode(text) {
+    //   var temp = document.createElement('div'); //创建一个容器标签元素
+    //   temp.innerHTML = text; //将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+    //   var output = temp.innerText || temp.textContent; //innerText(ie支持),textContent(火狐，google支持)
+    //   temp = null;
+    //   return output;
+    // }
+    // //
+    // parse('https://outlooker-rssproxy.r6sg.workers.dev/ithome').then((rss) => {
+    //   for (let item of rss.items) {
+    //     item.html = htmlDecode(item.description);
+    //     item.description = htmlDecode(item.html);
+    //     articleList.push({ ...item, dataSource: 'ithome' });
+    //   }
+    //   Fthis.setState({ articleList, ts: Math.random() });
+    //   console.log(Fthis.state);
+    // });
   }
   render() {
     let props = this.props;
@@ -70,12 +74,10 @@ class List extends PureComponent {
                   }
                 })()}
                 <li
-                  className={`outlooker-article-list-content ${
-                    unread ? 'outlooker-article-list-content-unread' : ''
-                  } ${
-                    selected ? 'outlooker-article-list-content-selected' : ''
-                  }`}
-                  onClick={(event)=>{
+                  className={`outlooker-article-list-content ${unread ? 'outlooker-article-list-content-unread' : ''
+                    } ${selected ? 'outlooker-article-list-content-selected' : ''
+                    }`}
+                  onClick={(event) => {
                     console.log(typeof this.props.onClick)
                     // this.props.onClick(item)
                   }}

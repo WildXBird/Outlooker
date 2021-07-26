@@ -12,7 +12,6 @@ let Tabs = function Tabs(props) {
     });
   });
   const content = React.Children.map(props.children, (child) => {
-
     return React.cloneElement(<>{child.props.children}</>, {
       // ...child.children.props,
       itemKey: child.key,
