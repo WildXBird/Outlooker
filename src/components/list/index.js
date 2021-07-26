@@ -1,6 +1,8 @@
 import './this.less';
 const { parse } = require('rss-to-json');
 import React, { PureComponent } from 'react';
+import { AutoAvatar } from '../../components/Avatar';
+import { LightButton } from '../../components/Button';
 
 class List extends PureComponent {
   constructor(props) {
@@ -13,10 +15,19 @@ class List extends PureComponent {
   componentDidMount() {
     let Fthis = this;
     let articleList = this.state.articleList;
+    //
+    function htmlDecode(text) {
+      var temp = document.createElement('div'); //创建一个容器标签元素
+      temp.innerHTML = text; //将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+      var output = temp.innerText || temp.textContent; //innerText(ie支持),textContent(火狐，google支持)
+      temp = null;
+      return output;
+    }
+    //
     parse('https://outlooker-rssproxy.r6sg.workers.dev/ithome').then((rss) => {
-      // console.log(JSON.stringify(rss, null, 3));
-      // console.log(rss);
       for (let item of rss.items) {
+        item.html = htmlDecode(item.description);
+        item.description = htmlDecode(item.html);
         articleList.push({ ...item, dataSource: 'ithome' });
       }
       Fthis.setState({ articleList, ts: Math.random() });
@@ -66,8 +77,40 @@ class List extends PureComponent {
                   }`}
                 >
                   <div className={'outlooker-article-list-layout-left'}>
-                    <div className={'outlooker-article-list-source'}>
-                      {item.dataSource}
+                    <div
+                      className={'outlooker-article-list-layout-left-holder'}
+                    >
+                      <div className={'outlooker-article-list-icon'}>
+                        <AutoAvatar item={item} />
+                        <div
+                          className={'outlooker-article-list-icon-hoverbox'}
+                        ></div>
+                      </div>
+                      <div className={'outlooker-article-list-source'}>
+                        {item.dataSource}
+                      </div>
+                      <div className={'outlooker-article-list-action'}>
+                        <LightButton
+                          style={{ color: 'var(--neutralSecondary)' }}
+                        >
+                          {''}
+                        </LightButton>
+                        <LightButton
+                          style={{ color: 'var(--neutralSecondary)' }}
+                        >
+                          {''}
+                        </LightButton>
+                        <LightButton
+                          style={{ color: 'var(--neutralSecondary)' }}
+                        >
+                          {''}
+                        </LightButton>
+                        <LightButton
+                          style={{ color: 'var(--neutralSecondary)' }}
+                        >
+                          {''}
+                        </LightButton>
+                      </div>
                     </div>
                   </div>
                   <div className={'outlooker-article-list-layout-right'}>

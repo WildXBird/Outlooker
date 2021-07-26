@@ -20,6 +20,8 @@
     margin-inline-start: unset;
     margin-inline-end: unset;
     padding-inline-start: unset;
+    cursor: auto;
+    user-select: none;
 
     li {
       height: 40px;
@@ -27,51 +29,155 @@
       list-style-type: unset;
       text-align: unset;
       background-color: var(--white);
+      margin-bottom: 1px;
+      // transition: background-color 0s;
+      // transition-delay: 1s;
 
       .outlooker-article-list-layout-left {
         display: inline-block;
         width: 332px;
         height: 100%;
+        border-left-width: 4px;
+        border-left-style: solid;
+        border-left-color: transparent;
+        vertical-align: top;
+        padding-left: 28px;
+
+        .outlooker-article-list-icon {
+          margin-right: 8px;
+          position: relative;
+          // height: 100%;
+          width: 28px;
+
+          .outlooker-article-list-icon-hoverbox {
+            display: none;
+          }
+        }
+
+        .outlooker-article-list-source {
+          font-weight: 600;
+          font-size: 14px;
+          font-family: auto;
+          width: calc(100% - 28px - 28px - 8px);
+        }
+
+        .outlooker-article-list-action {
+          display: none;
+          text-align: right;
+          width: 137px;
+          // width: 237px;
+          margin-right: 24px;
+          font-family: ShellFabricMDL2IconsLite, ShellFabricMDL2Icons,
+            controlIcons, mailIcons;
+          vertical-align: top;
+          font-size: 16px;
+          // text-align: center;
+          color: var(--neutralSecondary);
+
+          button {
+            margin-left: 5px;
+            width: 28px;
+            height: 28px;
+          }
+        }
       }
 
       .outlooker-article-list-layout-right {
         display: inline-block;
         width: calc(100% - 332px);
         height: 100%;
+        vertical-align: top;
 
-        .outlooker-article-list-layout-right-holder {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+        .outlooker-article-list-time {
+          width: 150px;
+          cursor: default;
+        }
 
-          .outlooker-article-list-time {
-            width: 150px;
+        .outlooker-article-list-content {
+          width: calc(100% - 150px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          .outlooker-article-list-title,
+          outlooker-article-list-description {
+            display: inline-block;
+            cursor: default;
           }
 
-          .outlooker-article-list-content {
-            width: calc(100% - 150px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+          .outlooker-article-list-title {
+          }
 
-            .outlooker-article-list-title,
-            outlooker-article-list-description {
-              display: inline-block;
+          .outlooker-article-list-description {
+            padding-left: 12px;
+          }
+        }
+      }
+
+      .outlooker-article-list-layout-left-holder,
+      .outlooker-article-list-layout-right-holder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        // justify-content: space-between;
+        align-items: center;
+      }
+
+      .outlooker-article-list-layout-left {
+        .outlooker-article-list-icon {
+          .outlooker-article-list-icon-hoverbox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 28px;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            line-height: 28px;
+            cursor: pointer;
+
+            &::before,
+            &::after {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              font-family: ShellFabricMDL2IconsLite, ShellFabricMDL2Icons,
+                controlIcons, mailIcons;
+              font-size: 16px;
+              vertical-align: top;
+              font-size: 18px;
+              text-align: center;
+              // vertical-align: middle;
             }
 
-            .outlooker-article-list-title {
+            &::before {
+              content: '';
             }
 
-            .outlooker-article-list-description {
-              padding-left: 12px;
+            &::after {
+              content: '';
+              font-size: 14px;
+              top: -1.5px;
+              left: 0.5px;
+              opacity: 0;
+            }
+
+            &:hover {
+              &::after {
+                opacity: 1;
+              }
             }
           }
         }
       }
 
       &.outlooker-article-list-content-unread {
+        .outlooker-article-list-layout-left {
+          border-left-color: var(--themePrimary);
+        }
+
         .outlooker-article-list-title {
           color: var(--themePrimary);
           font-weight: 600;
@@ -79,11 +185,67 @@
         }
 
         &.outlooker-article-list-content-selected {
+          .outlooker-Avatar {
+            opacity: 0;
+          }
+
+          .outlooker-article-list-icon-hoverbox {
+            display: flex !important;
+          }
+
           .outlooker-article-list-title {
             color: var(--themeDark);
           }
+
+          // &:active {
+          background-color: var(--themeLighter);
+          transition-delay: 0s;
+
+          button:hover {
+            background-color: var(--themeLight) !important;
+          }
+
+          // }
         }
       }
+
+      &:hover {
+        background-color: var(--neutralLighterAlt);
+
+        .outlooker-article-list-layout-left {
+          .outlooker-article-list-icon {
+            .outlooker-Avatar {
+              opacity: 0;
+            }
+
+            .outlooker-article-list-icon-hoverbox {
+              display: flex;
+            }
+          }
+
+          .outlooker-article-list-source {
+            width: calc(100% - 28px - 28px - 8px - 137px);
+          }
+
+          .outlooker-article-list-action {
+            display: inline-block;
+          }
+        }
+      }
+
+      // &:active {
+      //   background-color: var(--themeLighter);
+      //   transition-delay: 0s;
+
+      //   button:hover {
+      //     background-color: var(--themeLight) !important;
+      //   }
+      // }
+
+      // &:focus{
+      //   background-color: var(--themeLighter);
+      //   background-color: red;
+      // }
     }
   }
 }
