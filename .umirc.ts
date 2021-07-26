@@ -34,8 +34,18 @@ export default defineConfig({
                 },
                 {
                   path: './inbox',
-                  component: '@/pages/mail/inbox',
-                  routes: [],
+                  routes: [
+                    {
+                      path: './',
+                      exact: true,
+                      component: '@/pages/mail/inbox',
+                    },
+                    {
+                      path: './id',
+                      component: '@/pages/mail/viewArticle',
+                      routes: [],
+                    },
+                  ],
                 },
               ],
             },
