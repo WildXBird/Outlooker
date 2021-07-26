@@ -3,7 +3,7 @@ import './global.less';
 import { Layout } from 'antd';
 import HeaderContent from './header';
 import LeftBar from './leftBar';
-
+import { RightAD } from "../components/AD"
 export default function IndexPage(props) {
   let a = 1;
   const { Header, Footer, Content, Sider } = Layout;
@@ -21,9 +21,10 @@ export default function IndexPage(props) {
       >
         <HeaderContent />
       </Header>
-      <Content style={{ height: 'calc(100% - 48px)' }}>
+      <Content style={{ height: 'calc(100% - 48px)', width: "calc(100% - 305px)" }}>
         <LeftBar>{props.children}</LeftBar>
       </Content>
+      <RightAD />
       {/* <Footer /> */}
     </>
   );

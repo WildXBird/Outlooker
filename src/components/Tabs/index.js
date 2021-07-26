@@ -12,11 +12,11 @@ let Tabs = function Tabs(props) {
     });
   });
   const content = React.Children.map(props.children, (child) => {
-    console.log(child);
+
     return React.cloneElement(<>{child.props.children}</>, {
       // ...child.children.props,
       itemKey: child.key,
-      selectedKey: props.defaultActiveKey,
+      selectedKey: props.defaultActiveKey
     });
   });
   return (
@@ -38,11 +38,7 @@ let Tabs = function Tabs(props) {
 };
 Tabs.TabPane = function TabPane(props) {
   return (
-    <div
-      className={`outlooker-Tabs-tab ${
-        props.itemKey == props.selectedKey ? 'outlooker-Tabs-tab-actived' : ''
-      }`}
-    >
+    <div className={`outlooker-Tabs-tab ${props.itemKey == props.selectedKey ? 'outlooker-Tabs-tab-actived' : ''}`}>
       <div style={{ position: 'relative', top: 0 }}>{props.tab}</div>
       <div className={'outlooker-Tabs-tab-underline'} />
     </div>

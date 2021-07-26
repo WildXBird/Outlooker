@@ -75,6 +75,10 @@ class List extends PureComponent {
                   } ${
                     selected ? 'outlooker-article-list-content-selected' : ''
                   }`}
+                  onClick={(event)=>{
+                    console.log(typeof this.props.onClick)
+                    // this.props.onClick(item)
+                  }}
                 >
                   <div className={'outlooker-article-list-layout-left'}>
                     <div

@@ -33,5 +33,12 @@ let MenuAD = function MenuAD(props) {
     </div>
   );
 };
+let RightAD = function RightAD(props) {
+  return (
+    <div className={"rightAD"}>
+      666
+    </div>
+  );
+};
 
-export { MenuAD };
+export { MenuAD, RightAD };
