@@ -3,6 +3,8 @@ const { parse } = require('rss-to-json');
 import React, { PureComponent } from 'react';
 import { AutoAvatar } from '../../components/Avatar';
 import { LightButton } from '../../components/Button';
+import { history } from 'umi';
+
 
 class List extends PureComponent {
   constructor(props) {
@@ -40,13 +42,12 @@ class List extends PureComponent {
   }
   render() {
     let props = this.props;
-    console.log('render');
     // let todayStartTS = new Date(new Date().toLocaleDateString()).valueOf()
     //改成24小时内
     let todayStartTS = new Date().valueOf() - 3600 * 12 * 1000;
     let thisMonthHrDisplayed = false;
     return (
-      <div className={'outlooker-article-list'}>
+      <div className={'outlooker-article-list'} key={'outlooker-article-list'}>
         <ul>
           {Array.from(this.state.articleList).map((item, id) => {
             let unread = false;
@@ -62,7 +63,7 @@ class List extends PureComponent {
               today = true;
             }
             return (
-              <>
+              <div key={'outlooker-article-list-content' + id}>
                 {(() => {
                   if (!today && !thisMonthHrDisplayed) {
                     thisMonthHrDisplayed = true;
@@ -74,11 +75,10 @@ class List extends PureComponent {
                   }
                 })()}
                 <li
-                  key={'outlooker-article-list-dateHr' + id}
                   className={`outlooker-article-list-content ${unread ? 'outlooker-article-list-content-unread' : ''} ${selected ? 'outlooker-article-list-content-selected' : ''}`}
                   onClick={(event) => {
-                    console.log(typeof this.props.onClick)
-                    // this.props.onClick(item)
+                    let contentPseudoHash = btoa(encodeURI(item.link));
+                    history.push("/mail/0/inbox/id/" + contentPseudoHash)
                   }}
                 >
                   <div className={'outlooker-article-list-layout-left'}>
@@ -95,26 +95,10 @@ class List extends PureComponent {
                         {item.dataSource}
                       </div>
                       <div className={'outlooker-article-list-action'}>
-                        <LightButton
-                          style={{ color: 'var(--neutralSecondary)' }}
-                        >
-                          {''}
-                        </LightButton>
-                        <LightButton
-                          style={{ color: 'var(--neutralSecondary)' }}
-                        >
-                          {''}
-                        </LightButton>
-                        <LightButton
-                          style={{ color: 'var(--neutralSecondary)' }}
-                        >
-                          {''}
-                        </LightButton>
-                        <LightButton
-                          style={{ color: 'var(--neutralSecondary)' }}
-                        >
-                          {''}
-                        </LightButton>
+                        <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>
+                        <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>
+                        <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>
+                        <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>
                       </div>
                     </div>
                   </div>
@@ -136,7 +120,7 @@ class List extends PureComponent {
                     </div>
                   </div>
                 </li>
-              </>
+              </div>
             );
           })}
         </ul>

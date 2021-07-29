@@ -49,7 +49,6 @@ Menu.SubMenu = class Menu_SubMenu extends PureComponent {
     });
   }
   render() {
-    console.log('0', this.state);
     let props = this.props;
     const childrenWithProps = React.Children.map(props.children, (child) => {
       return React.cloneElement(child, {
