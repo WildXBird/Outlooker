@@ -42,6 +42,7 @@
     background: var(--white);
     padding: 0 12px 12px 12px;
     border: 1px solid var(--readingPaneCardFocusBorder);
+    height: calc(100% - 61px - 8px);
 
     .ViewArticle-content-infobox {
       height: 65px;
@@ -49,13 +50,14 @@
       align-items: center;
 
       .ViewArticle-content-infobox-icon {
-        margin-right: 8px;
+        margin-right: 12px;
         width: 40px;
         height: 40px;
       }
 
       .ViewArticle-content-infobox-data {
-        width: calc(100% - 40px - 8px - 200px);
+        width: calc(100% - 40px - 12px - 200px);
+        padding-top: 10px;
       }
 
       .ViewArticle-content-infobox-action {
@@ -63,6 +65,10 @@
       }
     }
 
-    .ViewArticle-content-html {}
+    .ViewArticle-content-html {
+      margin: 12px 16px 0 52px;
+      height: calc(100% - 65px);
+      overflow: overlay;
+    }
   }
 }

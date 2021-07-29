@@ -24,11 +24,15 @@ export default function IndexPage(props) {
       >
         <HeaderContent />
       </Header>
-      <Content style={{ height: 'calc(100% - 48px)', width: "calc(100% - 305px)" }}>
-        <LeftBar>{props.children}</LeftBar>
+      <Content style={{ height: 'calc(100% - 48px)',width:"100%" }}>
+        <div style={{ width: "calc(100% - 305px)",height:"100%",display:"inline-block" }}>
+          <LeftBar>{props.children}</LeftBar>
+        </div>
+        <div style={{ width: "305px",height:"100%",display:"inline-block",verticalAlign:"top" }}>
+          <RightAD />
+        </div>
       </Content>
-      <RightAD />
-      {/* <Footer /> */}
+
     </>
   );
 }

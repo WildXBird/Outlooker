@@ -21,16 +21,20 @@ class ViewArticle extends PureComponent {
     let articleList = this.state.articleList;
     this.globalDataUpdater = function (data) {
       let contentPseudoHash = history.location.pathname.split("/")[5]
-      // let contentUrl =btoa(encodeURI(item.link));
-      let contentLink = decodeURI(atob(contentPseudoHash));
-      let currentArticle = {}
-      for (let item of data) {
-        if (contentLink === item.link) {
-          currentArticle = item
+      try {
+        let contentLink = decodeURI(atob(contentPseudoHash));
+        let currentArticle = {}
+        for (let item of data) {
+          if (contentLink === item.link) {
+            currentArticle = item
+          }
         }
+        Fthis.setState({ articleList: data, currentArticle, ts: Math.random() });
+      } catch (error) {
+        
       }
-      // console.log("ViewArticle",data)
-      Fthis.setState({ articleList: data, currentArticle, ts: Math.random() });
+     
+
     }
     addDataListener(this.globalDataUpdater)
   }
@@ -56,22 +60,28 @@ class ViewArticle extends PureComponent {
       >
         <div className={"ViewArticle-topbar"} style={{}}>
           <div className={"ViewArticle-topbar-back"}>
-            <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>
+            <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => {
+              history.push("/mail/0/inbox")
+            }}>{''}</LightButton>
 
 
           </div>
           <div className={"ViewArticle-topbar-title"}>{title}</div>
         </div>
-        <div className={"ViewArticle-content"} style={{ height: "calc(100% - 61px)" }}>
+        <div className={"ViewArticle-content"} style={{}}>
           <div className={"ViewArticle-content-infobox"}>
             <div className={"ViewArticle-content-infobox-icon"}>
               <AutoAvatar item={currentItem} size={40} />
             </div>
             <div className={"ViewArticle-content-infobox-data"}>
-              <div>
-                {"华为云 <system@info.huaweicloud.com>"}<br/>
-                {"周一 2021/7/26 19:42"}<br/>
-                <span>{"收件人: "}</span>{"xieqiqiang00@live.com"}
+              {/* <div style={{paddingTop:10}}> */}
+              <div style={{ fontSize: 14, lineHeight: "18px" }}>{`华为云 <system@info.huaweicloud.com>`}</div>
+              <div style={{ fontSize: 12, lineHeight: "15px", marginTop: 2 }}>{`周一 2021/7/26 19:42`}</div>
+              <div style={{ fontSize: 12, lineHeight: "18px", marginTop: 2 }}>
+                <span style={{ fontWeight: 600 }}>{"收件人: "}</span>
+                {"xieqiqiang00@live.com"}
+                {/* </div> */}
+
               </div>
             </div>
             <div className={"ViewArticle-content-infobox-action"}>
