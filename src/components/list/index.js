@@ -67,16 +67,15 @@ class List extends PureComponent {
                   if (!today && !thisMonthHrDisplayed) {
                     thisMonthHrDisplayed = true;
                     return (
-                      <div className={'outlooker-article-list-dateHr'}>
+                      <div key={'outlooker-article-list-dateHr' + id} className={'outlooker-article-list-dateHr'}>
                         {'本月'}
                       </div>
                     );
                   }
                 })()}
                 <li
-                  className={`outlooker-article-list-content ${unread ? 'outlooker-article-list-content-unread' : ''
-                    } ${selected ? 'outlooker-article-list-content-selected' : ''
-                    }`}
+                  key={'outlooker-article-list-dateHr' + id}
+                  className={`outlooker-article-list-content ${unread ? 'outlooker-article-list-content-unread' : ''} ${selected ? 'outlooker-article-list-content-selected' : ''}`}
                   onClick={(event) => {
                     console.log(typeof this.props.onClick)
                     // this.props.onClick(item)
