@@ -1,15 +1,68 @@
 .ViewArticle {
+  background-color: var(--neutralLighterAlt);
+
   .ViewArticle-topbar {
     height: 61px;
     padding-left: 20px;
+    display: flex;
+    align-items: center;
+    padding-top: 17px;
+    padding-bottom: 12px;
 
     .ViewArticle-topbar-back {
       display: inline-block;
       width: 52px;
       padding-right: 20px;
       height: 32px;
+      font-family: ShellFabricMDL2IconsLite, ShellFabricMDL2Icons, controlIcons, mailIcons;
+
+      .outlooker-button {
+        height: 32px;
+        width: 32px;
+        font-size: 20px;
+      }
+
     }
 
-    .ViewArticle-topbar-title {}
+    .ViewArticle-topbar-title {
+      display: inline-block;
+      width: calc(100% - 52px);
+
+      font-size: 17px;
+      font-family: auto;
+      font-weight: 600;
+
+    }
+  }
+
+  .ViewArticle-content {
+    margin-right: 20px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    background: var(--white);
+    padding: 0 12px 12px 12px;
+    border: 1px solid var(--readingPaneCardFocusBorder);
+
+    .ViewArticle-content-infobox {
+      height: 65px;
+      display: flex;
+      align-items: center;
+
+      .ViewArticle-content-infobox-icon {
+        margin-right: 8px;
+        width: 40px;
+        height: 40px;
+      }
+
+      .ViewArticle-content-infobox-data {
+        width: calc(100% - 40px - 8px - 200px);
+      }
+
+      .ViewArticle-content-infobox-action {
+        width: 200px;
+      }
+    }
+
+    .ViewArticle-content-html {}
   }
 }

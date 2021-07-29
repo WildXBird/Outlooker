@@ -22,9 +22,9 @@ let Avatar = function Avatar(props) {
     if (typeof props.children === 'string') {
       backgroundColor =
         colorLib[
-          String(
-            props.children.substring(props.children.length - 1).charCodeAt(0),
-          ) % 10
+        String(
+          props.children.substring(props.children.length - 1).charCodeAt(0),
+        ) % 10
         ];
       let gaps = children.split(' ');
       if (gaps.length === 1) {
@@ -45,7 +45,8 @@ let Avatar = function Avatar(props) {
         src={src}
         className={'outlooker-Avatar'}
         style={{ backgroundColor, verticalAlign: 'middle' }}
-        size={28}
+        size={props.size || 28}
+      // size={40}
       >
         {children}
       </AntdAvatar>
@@ -56,6 +57,7 @@ let AutoAvatar = function AutoAvatar(props) {
   let nextProps = {};
   let item = props.item;
   nextProps.children = item.dataSource;
+  nextProps.size = props.size;
   return Avatar(nextProps, 'PrimaryButton');
 };
 
