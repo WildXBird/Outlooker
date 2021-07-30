@@ -15,6 +15,7 @@ class ViewArticle extends PureComponent {
       articleList: [],
     };
     this.onClick = () => { };
+
   }
   componentDidMount() {
     let Fthis = this;
@@ -31,26 +32,53 @@ class ViewArticle extends PureComponent {
         }
         Fthis.setState({ articleList: data, currentArticle, ts: Math.random() });
       } catch (error) {
-        
+
       }
-     
+
 
     }
     addDataListener(this.globalDataUpdater)
   }
   render() {
+    let loading = true
     let title = ""
     let content = <Skeleton avatar paragraph={{ rows: 6 }} />
     let currentItem = {}
+    let infobox = ""
     if (typeof (this.state.currentArticle) === "object") {
+      loading = false
       if (typeof (this.state.currentArticle.title) === "string") {
         title = this.state.currentArticle.title
-        content = <div dangerouslySetInnerHTML={{ __html: this.state.currentArticle.html }} />
+        content = <div dangerouslySetInnerHTML={{ __html: this.state.currentArticle.safeHTML }} />
         currentItem = this.state.currentArticle
+        infobox = <div className={"ViewArticle-content-infobox"}>
+          <div className={"ViewArticle-content-infobox-icon"}>
+            <AutoAvatar item={currentItem} size={40} />
+          </div>
+          <div className={"ViewArticle-content-infobox-data"}>
+            <div style={{ fontSize: 14, lineHeight: "18px" }}>{`${currentItem.dataSource} <${currentItem.email}>`}</div>
+            <div style={{ fontSize: 12, lineHeight: "15px", marginTop: 2 }}>
+              {new Date(currentItem.published).toLocaleString('zh-CN', { weekday: "long" }).replace("星期", "周")}
+              {" "}
+              {new Date(currentItem.published).toLocaleString('zh-CN', { year: "numeric", month: "numeric", day: "numeric" })}
+              {" "}
+              {new Date(currentItem.published).toLocaleString('zh-CN', { hour: "numeric", minute: "numeric", hour12: false })}
+              {/* {`周一 2021/7/26 19:42`} */}
+            </div>
+            <div style={{ fontSize: 12, lineHeight: "18px", marginTop: 2 }}>
+              <span style={{ fontWeight: 600 }}>{"收件人: "}</span>
+              {localStorage.emailAddress || "example@live.com"}
+
+            </div>
+          </div>
+          <div className={"ViewArticle-content-infobox-action"}>
+          </div>
+        </div>
       } else {
         title = "出错了"
         content = ""
         currentItem = {}
+        infobox = ""
       }
     }
     return (
@@ -69,27 +97,8 @@ class ViewArticle extends PureComponent {
           <div className={"ViewArticle-topbar-title"}>{title}</div>
         </div>
         <div className={"ViewArticle-content"} style={{}}>
-          <div className={"ViewArticle-content-infobox"}>
-            <div className={"ViewArticle-content-infobox-icon"}>
-              <AutoAvatar item={currentItem} size={40} />
-            </div>
-            <div className={"ViewArticle-content-infobox-data"}>
-              {/* <div style={{paddingTop:10}}> */}
-              <div style={{ fontSize: 14, lineHeight: "18px" }}>{`华为云 <system@info.huaweicloud.com>`}</div>
-              <div style={{ fontSize: 12, lineHeight: "15px", marginTop: 2 }}>{`周一 2021/7/26 19:42`}</div>
-              <div style={{ fontSize: 12, lineHeight: "18px", marginTop: 2 }}>
-                <span style={{ fontWeight: 600 }}>{"收件人: "}</span>
-                {"xieqiqiang00@live.com"}
-                {/* </div> */}
-
-              </div>
-            </div>
-            <div className={"ViewArticle-content-infobox-action"}>
-
-            </div>
-
-          </div>
-          <div className={"ViewArticle-content-html"}>
+          {infobox}
+          <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
             {content}
           </div>
         </div>

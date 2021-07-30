@@ -86,7 +86,7 @@ export default function IndexPage(props) {
           <IconButton style={IconButtonStyle}>{''}</IconButton>
           <IconButton style={IconButtonStyle}>{''}</IconButton>
           <IconButton style={IconButtonStyle}>{''}</IconButton>
-          <IconButton style={IconButtonStyle}>{''}</IconButton>
+          <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
           <IconButton style={IconButtonStyle}>{''}</IconButton>
           <IconButton style={IconButtonStyle}>{''}</IconButton>
         </div>

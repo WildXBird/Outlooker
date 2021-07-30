@@ -8,7 +8,7 @@ export default defineConfig({
   routes: [
     {
       path: './',
-      component: '@/components/index',
+      component: '@/components/App',
       routes: [
         {
           path: './',

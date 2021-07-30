@@ -43,6 +43,8 @@
     padding: 0 12px 12px 12px;
     border: 1px solid var(--readingPaneCardFocusBorder);
     height: calc(100% - 61px - 8px);
+    overflow: overlay;
+
 
     .ViewArticle-content-infobox {
       height: 65px;
@@ -68,7 +70,9 @@
     .ViewArticle-content-html {
       margin: 12px 16px 0 52px;
       height: calc(100% - 65px);
-      overflow: overlay;
+      img{
+        max-width: 100%;
+      }
     }
   }
 }
