@@ -8,6 +8,9 @@ import { Skeleton } from 'antd';
 import { LightButton } from '../../../components/Button';
 import defaultConfig from "../../../config/default"
 import fetchExtraData from "../../../components/fetchExtraData"
+import { isRead } from "../../../components/GlobalDataManager"
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 class ViewArticle extends PureComponent {
   constructor(props) {
@@ -24,15 +27,24 @@ class ViewArticle extends PureComponent {
       this.currentFetchingUrl = url
       try {
         console.log("fetchExtra", url)
-        fetchExtraData(url)
+        fetchExtraData(url).then(arr => {
+          console.log("arr", arr)
+          let replies = []
+          for (let item of arr) {
+            replies.push(this.makeMail(item, this.state.currentArticle))
+          }
+          this.setState({
+            replies: replies,
+            fetchedExtraData: true
+          })
+        })
       } catch (error) {
         console.error(error)
       }
     }
-    this.makeMail = (item) => {
+    this.makeMail = (item, currentArticle = {}) => {
       let title = "出错了",
         content = "",
-        currentItem = {},
         infobox = "",
         loading = true
       if (typeof (item) === "object") {
@@ -40,34 +52,34 @@ class ViewArticle extends PureComponent {
         if (typeof (item.title) === "string") {
           title = item.title
           content = <div dangerouslySetInnerHTML={{ __html: item.safeHTML }} />
-          currentItem = item
           infobox = <div className={"ViewArticle-content-infobox"}>
             <div className={"ViewArticle-content-infobox-icon"}>
-              <AutoAvatar item={currentItem} size={40} />
+              <AutoAvatar item={item} size={40} />
             </div>
             <div className={"ViewArticle-content-infobox-data"}>
-              <div style={{ fontSize: 14, lineHeight: "18px" }}>{`${currentItem.dataSource} <${currentItem.email}>`}</div>
+              <div style={{ fontSize: 14, lineHeight: "18px" }}>{`${item.author || item.dataSource} <${item.email}>`}</div>
               <div style={{ fontSize: 12, lineHeight: "15px", marginTop: 2 }}>
-                {new Date(currentItem.published).toLocaleString('zh-CN', { weekday: "long" }).replace("星期", "周")}
+                {new Date(item.published).toLocaleString('zh-CN', { weekday: "long" }).replace("星期", "周")}
                 {" "}
-                {new Date(currentItem.published).toLocaleString('zh-CN', { year: "numeric", month: "numeric", day: "numeric" })}
+                {new Date(item.published).toLocaleString('zh-CN', { year: "numeric", month: "numeric", day: "numeric" })}
                 {" "}
-                {new Date(currentItem.published).toLocaleString('zh-CN', { hour: "numeric", minute: "numeric", hour12: false })}
+                {new Date(item.published).toLocaleString('zh-CN', { hour: "numeric", minute: "numeric", hour12: false })}
                 {/* {`周一 2021/7/26 19:42`} */}
               </div>
               <div style={{ fontSize: 12, lineHeight: "18px", marginTop: 2 }}>
                 <span style={{ fontWeight: 600 }}>{"收件人: "}</span>
-                {localStorage.emailAddress || defaultConfig.emailAddress}
+                {currentArticle.email || localStorage.emailAddress || defaultConfig.emailAddress}
               </div>
             </div>
             <div className={"ViewArticle-content-infobox-action"}>
             </div>
           </div>
+
+          isRead(item.id, true)
         } else {
           console.error("item", item)
           title = "出错了"
           content = ""
-          currentItem = {}
           infobox = ""
         }
 
@@ -75,7 +87,6 @@ class ViewArticle extends PureComponent {
       return {
         title,
         content,
-        currentItem,
         infobox,
         loading
       }
@@ -127,79 +138,54 @@ class ViewArticle extends PureComponent {
       className={'ViewArticle'}
       style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
     >
-      {(() => {
-        if (loading) {
-          return (
-            <div
-              key={"loading"}
-              className={'ViewArticle'}
-              style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
-            >
-              <div className={"ViewArticle-topbar"} style={{}}>
-                <div className={"ViewArticle-topbar-back"}>
-                  <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => { history.push("/mail/0/inbox") }}>{''}</LightButton>
-                </div>
-                <div className={"ViewArticle-topbar-title"}></div>
-              </div>
-              <div className={"ViewArticle-content"}>
-                <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
-                  <Skeleton avatar paragraph={{ rows: 6 }} />
-                </div>
-              </div>
-            </div>
-          );
-        }
+      <div
+        className={'ViewArticle'}
+        style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
+      >
+        <div className={"ViewArticle-topbar"} style={{}}>
+          <div className={"ViewArticle-topbar-back"}>
+            <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => { history.push("/mail/0/inbox") }}>{''}</LightButton>
+          </div>
+          <div className={"ViewArticle-topbar-title"}>{loading ? "" : mainMail.title}</div>
+        </div>
+        <div className={"ViewArticle-contentArea"}>
+          {(() => {
+            if (loading) {
+              return (
+                <>
+                  <div className={"ViewArticle-content"}>
+                    <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
+                      <Skeleton avatar paragraph={{ rows: 6 }} />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+            let mailList = [
+              mainMail,
+              ...this.state.replies,
+            ]
+            console.log("mailList", mailList)
+            return Array.from(mailList).map((mail, id) => {
+              return (
+                <>
+                  <div className={"ViewArticle-content"}>
+                    {mail.infobox}
+                    <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
+                      {mail.content}
+                    </div>
+                  </div>
+                </>
 
-
-        return Array.from([
-          mainMail,
-        ]).map((mail, id) => {
-          return (
-            <div
-              key={id}
-              className={'ViewArticle'}
-              style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
-            >
-              <div className={"ViewArticle-topbar"} style={{}}>
-                <div className={"ViewArticle-topbar-back"}>
-                  <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => { history.push("/mail/0/inbox") }}>{''}</LightButton>
-                </div>
-                <div className={"ViewArticle-topbar-title"}>{mail.title}</div>
-              </div>
-              <div className={"ViewArticle-content"} style={{}}>
-                {mail.infobox}
-                <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
-                  {mail.content}
-                </div>
-              </div>
-            </div>
-          );
-        })
-      })()}
+              );
+            })
+          })()}
+          <div style={{ marginRight: 20, display: this.state.fetchedExtraData ?"none":"flex",justifyContent: "flex-end",paddingRight:5 }}>
+            <LoadingOutlined style={{ fontSize: 18 }} spin />
+          </div>
+        </div>
+      </div>
     </div>
-    // return (
-    //   <div
-    //     className={'ViewArticle'}
-    //     style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
-    //   >
-    //     <div className={"ViewArticle-topbar"} style={{}}>
-    //       <div className={"ViewArticle-topbar-back"}>
-    //         <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => {
-    //           history.push("/mail/0/inbox")
-    //         }}>{''}</LightButton>
-
-
-    //       </div>
-    //       <div className={"ViewArticle-topbar-title"}>{title}</div>
-    //     </div>
-    //     <div className={"ViewArticle-content"} style={{}}>
-    //       {infobox}
-    //       <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
-    //         {content}
-    //       </div>
-    //     </div>
-    //   </div>
-    // );
   }
 }
 export default ViewArticle;

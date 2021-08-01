@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { AutoAvatar } from '../../components/Avatar';
 import { LightButton } from '../../components/Button';
 import { history } from 'umi';
+import { isRead } from '../GlobalDataManager';
 
 
 class List extends PureComponent {
@@ -50,10 +51,7 @@ class List extends PureComponent {
       <div className={'outlooker-article-list'} key={'outlooker-article-list'}>
         <ul>
           {Array.from(this.state.articleList).map((item, id) => {
-            let unread = false;
-            if (id < 10) {
-              unread = true;
-            }
+            let unread = !isRead(item.id);
             let selected = false;
             if (id == 0) {
               selected = true;
@@ -92,7 +90,7 @@ class List extends PureComponent {
                         ></div>
                       </div>
                       <div className={'outlooker-article-list-source'}>
-                        {item.dataSource}
+                        {item.author || item.dataSource}
                       </div>
                       <div className={'outlooker-article-list-action'}>
                         <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>

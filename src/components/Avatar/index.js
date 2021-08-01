@@ -56,7 +56,7 @@ let Avatar = function Avatar(props) {
 let AutoAvatar = function AutoAvatar(props) {
   let nextProps = {};
   let item = props.item;
-  nextProps.children = item.dataSource;
+  nextProps.children = item.author ||item.dataSource;
   nextProps.size = props.size;
   return Avatar(nextProps, 'PrimaryButton');
 };
