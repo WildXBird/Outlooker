@@ -73,7 +73,12 @@ class Settings extends PureComponent {
         <br />
         <br />
         <p>{"更改即时保存，但可能需要刷新页面才能生效。"}</p>
-        <p>{"更改即时保存，但可能需要刷新页面才能生效。"}</p>
+        <p style={{color:"red"}}>
+          {"在浏览器中 Outlooker 无法直接访问RSS源，所以使用了一个由 Cloudflare Workers 搭建的中转服务，每日有总调用次数限制，请有条件的用户自己注册Cloudflare账户然后把“代理”改成自己的Wrokers！"}
+          <a href={"https://github.com/WildXBird/Outlooker/tree/main/workers"}>
+            {"详情点击这里"}
+          </a>
+        </p>
         <Drawer
           title={"订阅列表"}
           width={800}
