@@ -39,7 +39,7 @@ let RightAD = function RightAD(props) {
   }
   return (
     <div className={"rightAD"}>
-      666
+      
     </div>
   );
 };
