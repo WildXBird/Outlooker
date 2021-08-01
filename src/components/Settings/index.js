@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-
 import './this.less';
 import { Drawer, Button, Radio, Space, Input } from 'antd';
 import { Typography } from 'antd';
+import defaultConfig from "../../config/default"
 
 const { Title } = Typography;
-
+console.log("defaultConfig", defaultConfig)
 
 class Settings extends PureComponent {
   constructor(props) {
@@ -27,7 +27,7 @@ class Settings extends PureComponent {
         key={"Settings"}
       >
         <Title level={5}>{"代理"}</Title>
-        <Input placeholder="Basic usage" value={localStorage.Setting_Proxy} onChange={(event) => {
+        <Input placeholder={defaultConfig.Setting_Proxy} value={localStorage.Setting_Proxy} onChange={(event) => {
           let value = event.target.value
           localStorage.Setting_Proxy = value
           this.forceUpdate()

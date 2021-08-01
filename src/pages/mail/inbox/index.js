@@ -8,7 +8,6 @@ export default function Inbox(props) {
       style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
     >
       <Tabs defaultActiveKey="1" onChange={(callback) => { 
-        alert("h")
       }}>
         <Tabs.TabPane tab={'重点'} key="1">
           <RSS onClick={(data)=>{
@@ -17,7 +16,8 @@ export default function Inbox(props) {
         </Tabs.TabPane>
         <Tabs.TabPane tab={'其他'} key="2">
           {/* <div> */}
-          Content of Tab Pane 2{/* </div> */}
+          {/* Content of Tab Pane 2 */}
+          {/* </div> */}
         </Tabs.TabPane>
       </Tabs>
     </div>

@@ -115,7 +115,22 @@ class List extends PureComponent {
                         </span>
                       </div>
                       <div className={'outlooker-article-list-time'}>
-                        {new Date(item.published).toLocaleTimeString()}
+                        {(() => {
+                          let isToday = new Date(item.published).toLocaleString('zh-CN', { year: "numeric", month: "numeric", day: "numeric" }) === new Date().toLocaleString('zh-CN', { year: "numeric", month: "numeric", day: "numeric" })
+                          if (isToday) {
+                            return <>
+                              {new Date(item.published).toLocaleString('zh-CN', { weekday: "long" }).replace("星期", "周")}
+                              {" "}
+                              {new Date(item.published).toLocaleString('zh-CN', { hour: "numeric", minute: "numeric", hour12: false })}
+                            </>
+                          } else {
+                            return <>
+                              {new Date(item.published).toLocaleString('zh-CN', { weekday: "long" }).replace("星期", "周")}
+                              {" "}
+                              {new Date(item.published).toLocaleString('zh-CN', { month: "numeric", day: "numeric" })}
+                            </>
+                          }
+                        })()}
                       </div>
                     </div>
                   </div>

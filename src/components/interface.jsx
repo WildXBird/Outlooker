@@ -28,10 +28,10 @@ export default function Interface(input) {
         <HeaderContent openSettings={() => { setSettingDisplay(!settingDisplay) }} />
       </Header>
       <Content style={{ height: 'calc(100% - 48px)', width: "100%" }}>
-        <div style={{ width: "calc(100% - 305px)", height: "100%", display: "inline-block" }}>
+        <div style={{ width: `calc(100% - ${localStorage.disableAD === "true" ? "0px" : "305px"})`, height: "100%", display: "inline-block" }}>
           <LeftBar>{props.children}</LeftBar>
         </div>
-        <div style={{ width: "305px", height: "100%", display: "inline-block", verticalAlign: "top" }}>
+        <div style={{ width: localStorage.disableAD === "true" ? 0 : "305px", height: "100%", display: "inline-block", verticalAlign: "top" }}>
           <RightAD />
           <Settings
             display={settingDisplay}
