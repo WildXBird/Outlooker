@@ -116,101 +116,90 @@ class ViewArticle extends PureComponent {
   render() {
 
     let mainMail = this.makeMail(this.state.currentArticle)
-    let loading = mainMail.loading
+    // let loading = mainMail.loading
+    let loading = !this.state.currentArticle
     let title = ""
     let content = <Skeleton avatar paragraph={{ rows: 6 }} />
     let currentItem = {}
     let infobox = ""
 
-    // if (typeof (this.state.currentArticle) === "object") {
-    //   loading = false
-    //   if (typeof (this.state.currentArticle.title) === "string") {
-    //     title = this.state.currentArticle.title
-    //     content = <div dangerouslySetInnerHTML={{ __html: this.state.currentArticle.safeHTML }} />
-    //     currentItem = this.state.currentArticle
-    //     infobox = <div className={"ViewArticle-content-infobox"}>
-    //       <div className={"ViewArticle-content-infobox-icon"}>
-    //         <AutoAvatar item={currentItem} size={40} />
-    //       </div>
-    //       <div className={"ViewArticle-content-infobox-data"}>
-    //         <div style={{ fontSize: 14, lineHeight: "18px" }}>{`${currentItem.dataSource} <${currentItem.email}>`}</div>
-    //         <div style={{ fontSize: 12, lineHeight: "15px", marginTop: 2 }}>
-    //           {new Date(currentItem.published).toLocaleString('zh-CN', { weekday: "long" }).replace("星期", "周")}
-    //           {" "}
-    //           {new Date(currentItem.published).toLocaleString('zh-CN', { year: "numeric", month: "numeric", day: "numeric" })}
-    //           {" "}
-    //           {new Date(currentItem.published).toLocaleString('zh-CN', { hour: "numeric", minute: "numeric", hour12: false })}
-    //           {/* {`周一 2021/7/26 19:42`} */}
-    //         </div>
-    //         <div style={{ fontSize: 12, lineHeight: "18px", marginTop: 2 }}>
-    //           <span style={{ fontWeight: 600 }}>{"收件人: "}</span>
-    //           {localStorage.emailAddress || defaultConfig.emailAddress}
-
-    //         </div>
-    //       </div>
-    //       <div className={"ViewArticle-content-infobox-action"}>
-    //       </div>
-    //     </div>
-    //   } else {
-    //     console.error("this.state.currentArticle", this.state.currentArticle)
-    //     title = "出错了"
-    //     content = ""
-    //     currentItem = {}
-    //     infobox = ""
-    //   }
-    // }
     return <div
       className={'ViewArticle'}
       style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
     >
-      {Array.from([
-        mainMail,
-      ]).map((mail, id) => {
-        return (
-          <div
-            key={id}
-            className={'ViewArticle'}
-            style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
-          >
-            <div className={"ViewArticle-topbar"} style={{}}>
-              <div className={"ViewArticle-topbar-back"}>
-                <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => { history.push("/mail/0/inbox") }}>{''}</LightButton>
+      {(() => {
+        if (loading) {
+          return (
+            <div
+              key={"loading"}
+              className={'ViewArticle'}
+              style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
+            >
+              <div className={"ViewArticle-topbar"} style={{}}>
+                <div className={"ViewArticle-topbar-back"}>
+                  <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => { history.push("/mail/0/inbox") }}>{''}</LightButton>
+                </div>
+                <div className={"ViewArticle-topbar-title"}></div>
               </div>
-              <div className={"ViewArticle-topbar-title"}>{mail.title}</div>
-            </div>
-            <div className={"ViewArticle-content"} style={{}}>
-              {mail.infobox}
-              <div className={"ViewArticle-content-html"} style={{ marginLeft: mail.loading ? 0 : undefined }}>
-                {mail.content}
+              <div className={"ViewArticle-content"}>
+                <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
+                  <Skeleton avatar paragraph={{ rows: 6 }} />
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        }
+
+
+        return Array.from([
+          mainMail,
+        ]).map((mail, id) => {
+          return (
+            <div
+              key={id}
+              className={'ViewArticle'}
+              style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
+            >
+              <div className={"ViewArticle-topbar"} style={{}}>
+                <div className={"ViewArticle-topbar-back"}>
+                  <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => { history.push("/mail/0/inbox") }}>{''}</LightButton>
+                </div>
+                <div className={"ViewArticle-topbar-title"}>{mail.title}</div>
+              </div>
+              <div className={"ViewArticle-content"} style={{}}>
+                {mail.infobox}
+                <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
+                  {mail.content}
+                </div>
+              </div>
+            </div>
+          );
+        })
+      })()}
     </div>
-    return (
-      <div
-        className={'ViewArticle'}
-        style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
-      >
-        <div className={"ViewArticle-topbar"} style={{}}>
-          <div className={"ViewArticle-topbar-back"}>
-            <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => {
-              history.push("/mail/0/inbox")
-            }}>{''}</LightButton>
+    // return (
+    //   <div
+    //     className={'ViewArticle'}
+    //     style={{ width: '100%', height: '100%', verticalAlign: 'top' }}
+    //   >
+    //     <div className={"ViewArticle-topbar"} style={{}}>
+    //       <div className={"ViewArticle-topbar-back"}>
+    //         <LightButton style={{ color: 'var(--neutralSecondary)' }} onClick={() => {
+    //           history.push("/mail/0/inbox")
+    //         }}>{''}</LightButton>
 
 
-          </div>
-          <div className={"ViewArticle-topbar-title"}>{title}</div>
-        </div>
-        <div className={"ViewArticle-content"} style={{}}>
-          {infobox}
-          <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
-            {content}
-          </div>
-        </div>
-      </div>
-    );
+    //       </div>
+    //       <div className={"ViewArticle-topbar-title"}>{title}</div>
+    //     </div>
+    //     <div className={"ViewArticle-content"} style={{}}>
+    //       {infobox}
+    //       <div className={"ViewArticle-content-html"} style={{ marginLeft: loading ? 0 : undefined }}>
+    //         {content}
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
   }
 }
 export default ViewArticle;
