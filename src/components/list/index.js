@@ -53,9 +53,9 @@ class List extends PureComponent {
           {Array.from(this.state.articleList).map((item, id) => {
             let unread = !isRead(item.id);
             let selected = false;
-            if (id == 0) {
-              selected = true;
-            }
+            // if (id == 0) {
+            //   selected = true;
+            // }
             let today = false;
             if (todayStartTS < item.published) {
               today = true;

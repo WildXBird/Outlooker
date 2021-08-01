@@ -1,5 +1,9 @@
 import './this.less';
 import defaultConfig from "../../config/default"
+import { message } from 'antd';
+import Nprogress from 'nprogress'
+import "../nprogress.less"
+
 
 // const { parse } = require('rss-to-json');
 let Parser = require('rss-parser');
@@ -51,7 +55,7 @@ let hTmL = (htmlInput = "", item) => {
 
           break;
         case "SCRIPT":
-        case "IFRAME":
+        // case "IFRAME":
         case "STYLE":
         case "LINK":
         case "META":
@@ -102,61 +106,115 @@ let randomData = (item) => {
     email,
   }
 }
-let updateRSS = function () {
-  return new Promise((resolve, reject) => {
-    let articleList = [];
-    //
-    // parse('https://outlooker-rssproxy.r6sg.workers.dev/ithome').then((rss) => {
-    let parser = new Parser();
-    // parser.parseURL('https://outlooker-rssproxy.r6sg.workers.dev/v2ex').then((rss) => {
-
-    let rssLink = "https://rss.mifaw.com/articles/5c8bb11a3c41f61efd36683e/5c923e953882afa09dff573a"
-    rssLink = "https://outlooker-rssproxy.r6sg.workers.dev/v2ex"
-    rssLink = 'https://outlooker-rssproxy.r6sg.workers.dev/ithome'
-    if (typeof (localStorage.Setting_Proxy) === "string" && localStorage.Setting_Proxy.length > 1) {
-      rssLink = localStorage.Setting_Proxy + rssLink
+let getDataDiskSize = function () {
+  let size = 0;
+  for (let item in localStorage) {
+    if (window.localStorage.hasOwnProperty(item)) {
+      size += window.localStorage.getItem(item).length;
     }
-    parser.parseURL(rssLink).then((rss) => {
-      console.debug("rss", rss)
-      for (let item of rss.items) {
-        item.published = new Date(item.pubDate).valueOf()
-        item.html = (item.content || item.description)
-        item.description = htmlDecode(item.html)
-        item.safeHTML = hTmL(item.html, item)
-        item.id = item.id ||item.link ||item.title || String(Math.random())
-        //作者相关
-        item.dataSource = "V2EX"
-        // item.avatarUrl = undefined
-        item.author = item.author || item.creator || "V2EX"
-        //清理
-        delete item.pubDate
-        delete item.html
-        delete item.isoDate
-        delete item.creator
-        delete item.contentSnippet
-        delete item.content
-        item = { ...randomData(item), ...item }
-        articleList.push({ ...item })
+  }
+  return (size / 1024).toFixed(0)
+}
+let updateRSS = function () {
+  message.info(`Outlooker 已使用 ${getDataDiskSize()}KB 的空间`);
+  if (typeof (localStorage.RSSList) != "string") {
+    localStorage.RSSList = JSON.stringify([
+      { name: "IT之家", rss: 'https://www.ithome.com/rss/', icon: "https://www.ithome.com/img/t.png", deleteable: false },
+      { name: "V2EX", rss: "https://www.v2ex.com/index.xml", icon: "https://www.v2ex.com/static/icon-192.png", deleteable: false },
+      { name: "GCORES", rss: "https://rss.mifaw.com/articles/5c8bb11a3c41f61efd36683e/5e305f9817d09d44934437c3", disabled: true },
+    ])
+  }
+  let RSSList = JSON.parse(localStorage.RSSList)
+  return new Promise((resolve, reject) => {
+    // if ((new Date().valueOf() - new Date(localStorage.lastUpdateTime).valueOf()) < (localStorage.updateGap || 5 * 60 * 1000)) {
+    //   try {
+    //     message.info("当前内容来自缓存");
+    //     resolve(JSON.parse(localStorage.articleCache))
+    //     return
+    //   } catch (error) { }
+    // }
+    Nprogress.start()
+    let eachProgessCent = 1 / RSSList.length
+    let progress = 0
+    let promiseList = []
+    for (let Subscription of RSSList) {
+      if (Subscription.disabled) { continue }
+      promiseList.push(new Promise((resolve, reject) => {
+        let articleList = [];
+        let parser = new Parser();
+        let rssLink = Subscription.rss
+        if (typeof (localStorage.Setting_Proxy) === "string" && localStorage.Setting_Proxy.length > 1) {
+          rssLink = localStorage.Setting_Proxy + rssLink
+        }
+        parser.parseURL(rssLink).then((rss) => {
+          console.debug("rss", rss)
+          for (let item of rss.items) {
+            item.published = new Date(item.pubDate).valueOf()
+            item.html = (item.content || item.description)
+            item.description = htmlDecode(item.html)
+            item.safeHTML = hTmL(item.html, item)
+            item.id = item.id || item.link || item.title + (item.published) || String(Math.random())
+            //作者相关
+            item.dataSource = Subscription.name
+            item.author = item.author || item.creator || Subscription.name
+            item.avatarUrl = Subscription.icon
+            //清理
+            delete item.pubDate
+            delete item.html
+            delete item.isoDate
+            delete item.creator
+            delete item.contentSnippet
+            delete item.content
+            item = { ...randomData(item), ...item }
+            articleList.push({ ...item })
+          }
+          resolve(articleList)
+          progress += eachProgessCent
+          Nprogress.set(progress)
+        }).catch((error) => {
+          console.error(error)
+          if (typeof (item) === "object") {
+            message.error("无法下载：" + (item.name || item.rss || "错误源"));
+          } else {
+            message.error("无法下载数据");
+          }
+
+        })
+
+      }))
+    }
+    Promise.all(promiseList).then((values) => {
+      let allArticles = []
+      for (let arr of values) {
+        allArticles = allArticles.concat(arr);
       }
-      resolve(articleList)
+      allArticles.sort((x, y) => {
+        return y.published - x.published;
+      })
+      resolve(allArticles)
+      Nprogress.set(1)
+      localStorage.lastUpdateTime = new Date().toISOString()
+      localStorage.articleCache = JSON.stringify(allArticles)
+
+
+
+      // console.log("allArticles", allArticles);
+
     });
-
-    // parse('https://outlooker-rssproxy.r6sg.workers.dev/v2ex').then((rss) => {
-    //   console.debug("rss",rss)
-    //   for (let item of rss.items) {
-    //     item.html = htmlDecode(item.description)
-    //     item.description = htmlDecode(item.html)
-    //     item.safeHTML = hTmL(item.html)
-    //     item = { ...randomData(item), ...item }
-
-    //     articleList.push({ ...item, dataSource: 'IT之家' })
-    //   }
-    //   resolve(articleList)
-    // });
   });
 }
 let GlobalDataManager = function GlobalDataManager(props) {
   let GThis = globalThis || global || window
+  if (GThis.GlobalDataManagerReady) {
+    return ""
+  }
+  GThis.GlobalDataManagerReady = true
+  localStorage.ver = 0.1
+  ///代理
+  if (typeof (localStorage.Setting_Proxy) === "undefined") {
+    localStorage.Setting_Proxy = defaultConfig.Setting_Proxy
+  }
+  ///
   let GData = undefined
   if (typeof GThis["addDataListener"] === "undefined") {
     GThis.globalDataListener = []
