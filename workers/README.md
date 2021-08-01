@@ -2,13 +2,15 @@
 
 ## 创建Workers
 
-```没有 Cloudflare 账号的提前注册一个
+```
+没有 Cloudflare 账号的提前注册一个
 ```
 
 打开 https://dash.cloudflare.com ，登录上你的 Cloudflare 账号
 Cloudflare 支持中文，可以在右上角切换。
 点击右侧的
-```Workers
+```
+Workers
 构建无服务器应用程序。
 ```
 
@@ -23,5 +25,6 @@ Cloudflare可能会要求你自定义一个子域名称
 在 Workers 地址后面加上 “/-----” 就可以铁道Outlook里面使用了
 
 看起来就像是这样
-```https://outlooker-proxy.cloudflare-alwaysonline.workers.dev/-----
+```
+https://outlooker-proxy.cloudflare-alwaysonline.workers.dev/-----
 ```
