@@ -1,4 +1,4 @@
-# umi project
+# Outlook RSS
 
 ## Getting Started
 
