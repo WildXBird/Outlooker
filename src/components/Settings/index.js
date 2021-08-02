@@ -73,6 +73,7 @@ class Settings extends PureComponent {
         <br />
         <br />
         <p>{"更改即时保存，但可能需要刷新页面才能生效。"}</p>
+        <p>{"使用 localStorage 保存数据，如果数据量超过浏览器上限会出错，启用太多RSS源可能会有这个问题。"}</p>
         <p style={{color:"red"}}>
           {"在浏览器中 Outlooker 无法直接访问RSS源，所以使用了一个由 Cloudflare Workers 搭建的中转服务，每日有总调用次数限制，请有条件的用户自己注册Cloudflare账户然后把“代理”改成自己的Wrokers！"}
           <a href={"https://github.com/WildXBird/Outlooker/tree/main/workers"}>
