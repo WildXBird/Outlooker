@@ -94,7 +94,7 @@ export default function ActionBar(props) {
   return (
     <div className={'ActionBar'}>
       {(() => {
-        if (String(history.location.pathname).startsWith("/mail/0/inbox/id/")) {
+        if (String(history.location.pathname).toLocaleLowerCase().startsWith("/mail/0/inbox/id/")) {
           return viewActions
         } else {
           return listActions

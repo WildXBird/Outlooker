@@ -37,7 +37,7 @@ export default defineConfig({
                   routes: [
                     {
                       path: './',
-                      exact: true,
+                      // exact: true,
                       component: '@/pages/mail/inbox',
                       routes: [
                         {

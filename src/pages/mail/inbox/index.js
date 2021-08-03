@@ -1,7 +1,9 @@
 import Tabs from '../../../components/Tabs';
 import RSS from '../../../components/list';
 import React, { PureComponent } from 'react';
+import { history } from 'umi';
 
+import "./this.less"
 // export default function Inbox(props) {
 //   return (
 //     <div
@@ -28,7 +30,7 @@ class Inbox extends PureComponent {
     this.state = { activeKey: "1" };
   }
   render() {
-    console.log("rerenderInbox")
+    console.log("rerenderInbox", this.props)
     return (
       <div
         className={'inbox'}
@@ -43,9 +45,12 @@ class Inbox extends PureComponent {
             }} />
           </Tabs.TabPane>
           <Tabs.TabPane tab={'其他'} key="2">
-             
           </Tabs.TabPane>
         </Tabs>
+
+        <div className={`artView ${String(history.location.pathname).toLocaleLowerCase().startsWith("/mail/0/inbox/id/")}`}>
+          {this.props.children}
+        </div>
       </div>
     );
   }
