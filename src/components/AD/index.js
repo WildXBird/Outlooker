@@ -39,7 +39,7 @@ let RightAD = function RightAD(props) {
   }
   return (
     <div className={"rightAD"}>
-      
+      {"广告已关闭"}
     </div>
   );
 };

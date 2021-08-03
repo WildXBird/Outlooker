@@ -25,15 +25,47 @@ let hTmL = (htmlInput = "", item) => {
             if (node.attributes.src.value.startsWith("//")) {
               node.src = "https:" + node.attributes.src.value
             }
-            if (typeof (localStorage.Setting_Proxy) === "string" && localStorage.Setting_Proxy.length > 1) {
-              if (node.attributes.src.value) {
-                node.src = `${localStorage.Setting_Proxy}${node.attributes.src.value}`
+            try {
+              let url = new URL(node.attributes.src.value)
+              if (url.protocol !== "http:" && url.protocol !== "https:") {
+                let attributes = node.attributes
+                for (let item of attributes) {
+                  try {
+                    let url = new URL(item.value)
+                    if (url.protocol == "https:") {
+                      node.src = url.href
+                    }
+                  } catch (error) { }
+                }
+              }
+            } catch (error) { }
+
+
+            let needProxy = false
+            try {
+              let url = new URL(node.src)
+              if (url.protocol == "http:") {
+                needProxy = true
+              }
+            } catch (error) { }
+            ///
+            node.loading = "lazy"
+            if (localStorage.forceImgProxy === "true" || needProxy) {
+              if (typeof (localStorage.Setting_Proxy) === "string" && localStorage.Setting_Proxy.length > 1) {
+                if (node.attributes.src.value) {
+                  node.src = `${localStorage.Setting_Proxy}${node.attributes.src.value}`
+                }
+              } else {
+                if (node.attributes.src.value) {
+                  node.src = `${defaultConfig.Setting_Proxy}${node.attributes.src.value}`
+                }
               }
             } else {
-              if (node.attributes.src.value) {
-                node.src = `${defaultConfig.Setting_Proxy}${node.attributes.src.value}`
-              }
-
+              node.referrerPolicy = "no-referrer"
+              // if (node.attributes.src.value.indexOf("imgur.com") !== -1) {
+              //   console.log("referrerpolicy",)
+              //   node.referrerPolicy = "origin"
+              // }
             }
           }
           break;
@@ -87,7 +119,12 @@ let randomData = (item) => {
   let username = "anonymous"
   let hostname = "brokendreams.cloud"
   if (item.author || item.creator) {
-    username = (item.author || item.creator).toLowerCase()
+    username = String(item.creator || item.author).toLowerCase()
+  }
+  try {
+    btoa(username)
+  } catch (error) {
+    username = "no-reply"
   }
   try {
     let link = item.link || ""
@@ -147,7 +184,6 @@ let updateRSS = function () {
           rssLink = localStorage.Setting_Proxy + rssLink
         }
         parser.parseURL(rssLink).then((rss) => {
-          console.debug("rss", rss)
           for (let item of rss.items) {
             item.published = new Date(item.pubDate).valueOf()
             item.html = (item.content || item.description)
@@ -239,7 +275,7 @@ let GlobalDataManager = function GlobalDataManager(props) {
   }
   let trigger = () => {
     updateRSS().then((data) => {
-      console.log("data", data)
+      // console.log("data", data)
       GData = data
       for (let func of GThis.globalDataListener) {
         func(GData)

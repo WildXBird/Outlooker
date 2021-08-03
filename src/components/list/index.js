@@ -17,45 +17,24 @@ class List extends PureComponent {
   }
   componentDidMount() {
     let Fthis = this;
-    let articleList = this.state.articleList;
     this.globalDataUpdater = function (data) {
       Fthis.setState({ articleList: data, ts: Math.random() });
     }
     addDataListener(this.globalDataUpdater)
-    // //
-    // function htmlDecode(text) {
-    //   var temp = document.createElement('div'); //创建一个容器标签元素
-    //   temp.innerHTML = text; //将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
-    //   var output = temp.innerText || temp.textContent; //innerText(ie支持),textContent(火狐，google支持)
-    //   temp = null;
-    //   return output;
-    // }
-    // //
-    // parse('https://outlooker-rssproxy.r6sg.workers.dev/ithome').then((rss) => {
-    //   for (let item of rss.items) {
-    //     item.html = htmlDecode(item.description);
-    //     item.description = htmlDecode(item.html);
-    //     articleList.push({ ...item, dataSource: 'ithome' });
-    //   }
-    //   Fthis.setState({ articleList, ts: Math.random() });
-    //   console.log(Fthis.state);
-    // });
   }
   render() {
-    let props = this.props;
-    // let todayStartTS = new Date(new Date().toLocaleDateString()).valueOf()
-    //改成24小时内
     let todayStartTS = new Date().valueOf() - 3600 * 12 * 1000;
     let thisMonthHrDisplayed = false;
+    let unreadCount = 0
     return (
       <div className={'outlooker-article-list'} key={'outlooker-article-list'}>
         <ul>
           {Array.from(this.state.articleList).map((item, id) => {
             let unread = !isRead(item.id);
+            if(unread){
+              unreadCount ++ 
+            }
             let selected = false;
-            // if (id == 0) {
-            //   selected = true;
-            // }
             let today = false;
             if (todayStartTS < item.published) {
               today = true;
@@ -136,6 +115,9 @@ class List extends PureComponent {
               </div>
             );
           })}
+          {function(){
+            localStorage.unreadCount = unreadCount
+          }()}
         </ul>
       </div>
     );

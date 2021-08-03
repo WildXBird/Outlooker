@@ -16,10 +16,10 @@ export default function IndexPage(props) {
       }}
       // style={{ width: "100%" }}
       defaultSelectedKey={'inbox'}
-      // defaultOpenKeys={['sub1']}
+    // defaultOpenKeys={['sub1']}
     >
       <Menu.SubMenu key="sub1" icon={<MailOutlined />} title={'收藏夹'}>
-        <Menu.Item key={'inbox'} icon={''} count={11251} primary>
+        <Menu.Item key={'inbox'} icon={''} count={localStorage.unreadCount || ""} primary>
           {'收件箱'}
         </Menu.Item>
         <Menu.Item key="2" icon={''}>
@@ -40,7 +40,7 @@ export default function IndexPage(props) {
       </Menu.SubMenu>
 
       <Menu.SubMenu key="sub2" icon={<AppstoreOutlined />} title={'文件夹'}>
-        <Menu.Item key="21" icon={''} count={11251} primary>
+        <Menu.Item key="21" icon={''} count={localStorage.unreadCount || ""} primary>
           {'收件箱'}
         </Menu.Item>
         <Menu.Item key="22" icon={''} count={51}>

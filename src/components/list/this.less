@@ -55,10 +55,13 @@
         }
 
         .outlooker-article-list-source {
-          font-weight: 600;
+          // font-weight: 600;
           font-size: 14px;
           font-family: auto;
           width: calc(100% - 28px - 28px - 8px);
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
 
         .outlooker-article-list-action {
@@ -107,8 +110,7 @@
             cursor: default;
           }
 
-          .outlooker-article-list-title {
-          }
+          .outlooker-article-list-title {}
 
           .outlooker-article-list-description {
             padding-left: 12px;
@@ -178,6 +180,10 @@
       &.outlooker-article-list-content-unread {
         .outlooker-article-list-layout-left {
           border-left-color: var(--themePrimary);
+
+          .outlooker-article-list-source {
+            font-weight: 600;
+          }
         }
 
         .outlooker-article-list-title {
