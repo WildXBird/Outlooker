@@ -2,14 +2,12 @@ import './this.less';
 const { parse } = require('rss-to-json');
 import React, { PureComponent } from 'react';
 import { AutoAvatar } from '../../../components/Avatar';
-// import { LightButton } from '../../components/Button';
 import { history } from 'umi';
-import { Skeleton } from 'antd';
+import { Skeleton,message } from 'antd';
 import { LightButton } from '../../../components/Button';
 import defaultConfig from "../../../config/default"
 import fetchExtraData from "../../../components/fetchExtraData"
 import { isRead } from "../../../components/GlobalDataManager"
-import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 class ViewArticle extends PureComponent {
@@ -28,7 +26,6 @@ class ViewArticle extends PureComponent {
       try {
         console.log("fetchExtra", url)
         fetchExtraData(url).then(arr => {
-          console.log("arr", arr)
           let replies = []
           for (let item of arr) {
             replies.push(this.makeMail(item, this.state.currentArticle))
@@ -43,12 +40,23 @@ class ViewArticle extends PureComponent {
       }
     }
     this.makeMail = (item, currentArticle = {}) => {
+      console.log("currentArticle",currentArticle)
       let title = "出错了",
         content = "",
         infobox = "",
         loading = true
       if (typeof (item) === "object") {
         loading = false
+        let buttonStyle = {
+          height: '100%',
+          width: '100%',
+          fontFamily: 'ShellFabricMDL2IconsLite,ShellFabricMDL2Icons,controlIcons,mailIcons',
+          fontSize: 16,
+          verticalAlign: 'top',
+          padding: 7,
+          color: 'var(--themeDark)',
+          paddingTop: 8,
+        };
         if (typeof (item.title) === "string") {
           title = item.title
           content = <div dangerouslySetInnerHTML={{ __html: item.safeHTML }} />
@@ -68,10 +76,30 @@ class ViewArticle extends PureComponent {
               </div>
               <div style={{ fontSize: 12, lineHeight: "18px", marginTop: 2 }}>
                 <span style={{ fontWeight: 600 }}>{"收件人: "}</span>
-                {currentArticle.email || localStorage.emailAddress || defaultConfig.emailAddress}
+                {item.recipient || currentArticle.email || localStorage.emailAddress || defaultConfig.emailAddress}
               </div>
             </div>
             <div className={"ViewArticle-content-infobox-action"}>
+              <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
+                <LightButton style={buttonStyle}>{''}</LightButton>
+              </div>
+              <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
+                <LightButton style={buttonStyle}>{''}</LightButton>
+              </div>
+              <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
+                <LightButton style={buttonStyle}>{''}</LightButton>
+              </div>
+              <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
+                <LightButton style={buttonStyle} onClick={() => {
+                  if (item.link) {
+                    window.open(item.link)
+                  } else {
+                    message.info(`无法打开`);
+
+                  }
+                }}>{''}</LightButton>
+              </div>
+
             </div>
           </div>
 
@@ -165,7 +193,6 @@ class ViewArticle extends PureComponent {
               mainMail,
               ...this.state.replies,
             ]
-            console.log("mailList", mailList)
             return Array.from(mailList).map((mail, id) => {
               return (
                 <>
@@ -180,8 +207,10 @@ class ViewArticle extends PureComponent {
               );
             })
           })()}
-          <div style={{ marginRight: 20, display: this.state.fetchedExtraData ?"none":"flex",justifyContent: "flex-end",paddingRight:5 }}>
+          <div style={{ marginRight: 20, display: this.state.fetchedExtraData ? "none" : "flex", justifyContent: "flex-end", paddingRight: 5,height:22 }}>
+            <div style={{height:28,width:18}}>
             <LoadingOutlined style={{ fontSize: 18 }} spin />
+            </div>
           </div>
         </div>
       </div>

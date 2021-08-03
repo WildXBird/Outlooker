@@ -39,12 +39,19 @@ export default defineConfig({
                       path: './',
                       exact: true,
                       component: '@/pages/mail/inbox',
+                      routes: [
+                        {
+                          path: './id',
+                          component: '@/pages/mail/viewArticle',
+                          routes: [],
+                        },
+                      ],
                     },
-                    {
-                      path: './id',
-                      component: '@/pages/mail/viewArticle',
-                      routes: [],
-                    },
+                    // {
+                    //   path: './id',
+                    //   component: '@/pages/mail/viewArticle',
+                    //   routes: [],
+                    // },
                   ],
                 },
               ],

@@ -2,6 +2,7 @@ import { Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styles from './global.less';
 import { IconButton, BorderlessButton } from '../components/Button';
+import { history } from 'umi';
 
 export default function IndexPage(props) {
   let IconButtonStyle = {
@@ -34,6 +35,9 @@ export default function IndexPage(props) {
             lineHeight: '48px',
             verticalAlign: 'top',
             fontSize: 16,
+          }}
+          onClick={() => {
+            history.push("/")
           }}
         >
           {'Outlook'}

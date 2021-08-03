@@ -23,25 +23,26 @@ let Avatar = function Avatar(props) {
       src = localStorage.Setting_Proxy + props.src
     }
     backgroundColor = 'rgb(255 255 255)';
-  } else {
-    if (props.children) {
-      children = props.children;
-      if (typeof props.children === 'string') {
-        backgroundColor = colorLib[String(props.children.substring(props.children.length - 1).charCodeAt(0),) % 10];
-        let gaps = children.split(' ');
-        if (gaps.length == 1) {
-          gaps = children.split(/(?=[A-Z])/)
-        }
-        if (gaps.length === 1) {
-          children = children.substring(0, 1).toLocaleUpperCase();
-        } else {
-          let first = gaps[0].substring(0, 1).toLocaleUpperCase();
-          let last = gaps[gaps.length - 1].substring(0, 1).toLocaleUpperCase();
-          children = first + last;
-        }
+  }
+  //  else {
+  if (props.children) {
+    children = props.children;
+    if (typeof props.children === 'string') {
+      backgroundColor = colorLib[String(props.children.substring(props.children.length - 1).charCodeAt(0),) % 10];
+      let gaps = children.split(' ');
+      if (gaps.length == 1) {
+        gaps = children.split(/(?=[A-Z])/)
+      }
+      if (gaps.length === 1) {
+        children = children.substring(0, 1).toLocaleUpperCase();
+      } else {
+        let first = gaps[0].substring(0, 1).toLocaleUpperCase();
+        let last = gaps[gaps.length - 1].substring(0, 1).toLocaleUpperCase();
+        children = first + last;
       }
     }
   }
+  // }
   return (
     <>
       <AntdAvatar

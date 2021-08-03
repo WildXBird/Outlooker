@@ -65,7 +65,7 @@ export default function IndexPage(props) {
               display: 'inline-block',
             }}
           >
-            <ActionBar type={'inbox'} />
+            <ActionBar />
           </div>
         </div>
         <div

@@ -95,10 +95,23 @@
     }
   }
 
-  .outlooker-Tabs-content {
+  .outlooker-Tabs-content-Area {
     height: calc(100% - 57px);
     // overflow: overlay;
     overflow: scroll;
     background-color: var(--neutralLighterAlt);
+
+    .outlooker-Tabs-content {
+      // display: none;
+      // height: 100%;
+      height: 0px;
+      overflow: hidden;
+      width: 100%;
+
+      &.outlooker-Tabs-content-actived {
+        display: block;
+        height: 100%;
+      }
+    }
   }
 }
