@@ -1,5 +1,5 @@
 # Outlook RSS
-Outlook不仅仅是一个摸鱼工具，更是一个高质量RSS阅读器。
+Outlook不仅仅是一个摸鱼工具，更是一个高质量(仅PC)RSS阅读器。
 持续更新中...
 
 ## Getting Started
