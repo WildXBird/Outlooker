@@ -44,13 +44,15 @@ let hTmL = (htmlInput = "", item) => {
             let needProxy = false
             try {
               let url = new URL(node.src)
+             
               if (url.protocol == "http:") {
                 needProxy = true
               }
-            } catch (error) { }
+            } catch (error) {}
             ///
             node.loading = "lazy"
             if (localStorage.forceImgProxy === "true" || needProxy) {
+              node.referrerPolicy = "origin"
               if (typeof (localStorage.Setting_Proxy) === "string" && localStorage.Setting_Proxy.length > 1) {
                 if (node.attributes.src.value) {
                   node.src = `${localStorage.Setting_Proxy}${node.attributes.src.value}`
@@ -62,11 +64,9 @@ let hTmL = (htmlInput = "", item) => {
               }
             } else {
               node.referrerPolicy = "no-referrer"
-              // if (node.attributes.src.value.indexOf("imgur.com") !== -1) {
-              //   console.log("referrerpolicy",)
-              //   node.referrerPolicy = "origin"
-              // }
             }
+            node.removeAttribute("height")
+            node.removeAttribute("width")
           }
           break;
         case "A":
