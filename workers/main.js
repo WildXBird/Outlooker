@@ -9,7 +9,11 @@ addEventListener("fetch", (event) => {
 let proxy = function (targetUrl, origin) {
     return new Promise((resolve, reject) => {
         console.log("targetUrl", targetUrl)
-        let AccessControlAllowOrigin = origin ? { "Access-Control-Allow-Origin": origin } : {}
+        let AccessControlAllowOrigin = origin ? {
+            "Access-Control-Allow-Origin": origin,
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Method": "*",
+        } : {}
         fetch(targetUrl).then((data) => {
             data.arrayBuffer().then((bodyArrayBuffer) => {
                 var uint8View = new Uint8Array(bodyArrayBuffer);
