@@ -69,7 +69,14 @@ class List extends PureComponent {
                         ></div>
                       </div>
                       <div className={'outlooker-article-list-source'}>
-                        {item.author || item.dataSource}
+                        {function(){
+                          if(item.author === "WildXBird"){
+                            return "Outlooker更新"
+                          }else{
+                            return item.author || item.dataSource
+                          }
+                        }()}
+                        
                       </div>
                       <div className={'outlooker-article-list-action'}>
                         <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>

@@ -44,11 +44,11 @@ let hTmL = (htmlInput = "", item) => {
             let needProxy = false
             try {
               let url = new URL(node.src)
-             
+
               if (url.protocol == "http:") {
                 needProxy = true
               }
-            } catch (error) {}
+            } catch (error) { }
             ///
             node.loading = "lazy"
             if (localStorage.forceImgProxy === "true" || needProxy) {
@@ -156,12 +156,33 @@ let updateRSS = function () {
   message.info(`Outlooker 已使用 ${getDataDiskSize()}KB 的空间`);
   if (typeof (localStorage.RSSList) != "string") {
     localStorage.RSSList = JSON.stringify([
+      // { name: "Outlooker更新日志", rss: 'https://github.com/WildXBird/Outlooker/releases.atom', icon: "https://github.githubassets.com/pinned-octocat.svg", deleteable: false },
       { name: "IT之家", rss: 'https://www.ithome.com/rss/', icon: "https://www.ithome.com/img/t.png", deleteable: false },
       { name: "V2EX", rss: "https://www.v2ex.com/index.xml", icon: "https://www.v2ex.com/static/icon-192.png", deleteable: false },
       { name: "GCORES", rss: "https://rss.mifaw.com/articles/5c8bb11a3c41f61efd36683e/5e305f9817d09d44934437c3", disabled: true },
     ])
   }
+  try {
+    // if (Number(localStorage.ver) < 0.2) {
+    (function () {
+      let rss = "https://github.com/WildXBird/Outlooker/releases.atom"
+      let currentRSSList = JSON.parse(localStorage.RSSList)
+      for (let item of currentRSSList) {
+        // console.log(item.rss == rss,"item",item)
+        if (item.rss == rss) {
+          return
+        }
+      }
+      currentRSSList.push({ name: "Outlooker更新", rss, icon: "https://github.githubassets.com/pinned-octocat.svg", deleteable: false })
+      localStorage.RSSList = JSON.stringify(currentRSSList)
+    })()
+    // }
+  } catch (error) {
+    console.debug(error)
+  }
   let RSSList = JSON.parse(localStorage.RSSList)
+
+
   return new Promise((resolve, reject) => {
     // if ((new Date().valueOf() - new Date(localStorage.lastUpdateTime).valueOf()) < (localStorage.updateGap || 5 * 60 * 1000)) {
     //   try {
@@ -245,6 +266,7 @@ let GlobalDataManager = function GlobalDataManager(props) {
     return ""
   }
   GThis.GlobalDataManagerReady = true
+  localStorage.ver = 0.2
   localStorage.ver = 0.1
   ///代理
   if (typeof (localStorage.Setting_Proxy) === "undefined") {
