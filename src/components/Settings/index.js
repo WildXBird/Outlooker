@@ -74,7 +74,7 @@ class Settings extends PureComponent {
           console.log("disableAD", value)
           localStorage.disableAD = value
           this.forceUpdate()
-        }}>{"显示"}</Checkbox>
+        }}>{"隐藏"}</Checkbox>
         <br />
         <br />
         <Title level={5}>{"图片中转服务器"}</Title>
