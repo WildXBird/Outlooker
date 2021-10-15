@@ -23,15 +23,14 @@
     cursor: auto;
     user-select: none;
 
-    li {
+    a {
       height: 40px;
       display: block;
       list-style-type: unset;
       text-align: unset;
       background-color: var(--white);
       margin-bottom: 1px;
-      // transition: background-color 0s;
-      // transition-delay: 1s;
+color: unset;
 
       .outlooker-article-list-layout-left {
         display: inline-block;
@@ -99,6 +98,9 @@
         }
 
         .outlooker-article-list-content {
+          // *{
+          //   cursor:pointer;
+          // }
           width: calc(100% - 80px);
           overflow: hidden;
           text-overflow: ellipsis;
