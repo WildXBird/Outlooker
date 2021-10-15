@@ -68,6 +68,15 @@ class Settings extends PureComponent {
         }} />
         <br />
         <br />
+        <Title level={5}>{"广告区域"}</Title>
+        <Checkbox checked={localStorage.disableAD === "true"} onChange={(event) => {
+          let value = event.target.checked
+          console.log("disableAD", value)
+          localStorage.disableAD = value
+          this.forceUpdate()
+        }}>{"显示"}</Checkbox>
+        <br />
+        <br />
         <Title level={5}>{"图片中转服务器"}</Title>
         <Checkbox checked={localStorage.forceImgProxy === "true"} onChange={(event) => {
           let value = event.target.checked
@@ -77,7 +86,7 @@ class Settings extends PureComponent {
         }}>{"强制中转"}</Checkbox>
         <p>{"仅在图片不能正常显示时启用"}</p>
         <br />
-        {/* <br /> */}
+       
 
         <Button type="primary" onClick={() => { this.setState({ openRssList: true }) }}>{"管理订阅"}</Button>
         <br />
