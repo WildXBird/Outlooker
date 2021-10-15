@@ -12,7 +12,7 @@ class Tabs extends PureComponent {
     const titleChildren = React.Children.map(props.children, (child) => {
       return React.cloneElement(child, {
         ...child.props,
-        itemKey: child.key,
+        itemkey: child.key,
         selectedKey: activeKey,
         onClick: (() => {
           console.log("onClick")
@@ -26,7 +26,7 @@ class Tabs extends PureComponent {
       return React.cloneElement(<div className={`outlooker-Tabs-content  ${child.key == activeKey ? 'outlooker-Tabs-content-actived' : ''}`} style={{}}>
         {child.props.children}
       </div>, {
-        itemKey: child.key,
+        itemkey: child.key,
         selectedKey: activeKey
       });
     });
@@ -60,7 +60,7 @@ Tabs.TabPane = class TabPane extends PureComponent {
     let props = this.props
     console.log("props", props)
     return (
-      <div className={`outlooker-Tabs-tab ${props.itemKey == props.selectedKey ? 'outlooker-Tabs-tab-actived' : ''}`} onClick={this.props.onClick}>
+      <div className={`outlooker-Tabs-tab ${props.itemkey == props.selectedKey ? 'outlooker-Tabs-tab-actived' : ''}`} onClick={this.props.onClick}>
         <div style={{ position: 'relative', top: 0 }}>{props.tab}</div>
         <div className={'outlooker-Tabs-tab-underline'} />
       </div>

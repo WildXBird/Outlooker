@@ -9,10 +9,27 @@ import React, { PureComponent } from 'react';
 class IndexPage extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    // alert(window.innerWidth)
+
+    this.state = {
+      hideMenu: this.needHideMenu()
+    };
+  }
+  needHideMenu() {
+    return (window.innerWidth < 1000) ? true : false
+  }
+  onResize(event) {
+    if (this.state.hideMenu !== this.needHideMenu()) {
+      this.setState({
+        hideMenu: this.needHideMenu()
+      })
+    }
   }
   componentDidMount() {
-
+    window.addEventListener("resize", this.onResize.bind(this))
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.onResize.bind(this))
   }
   render() {
     let props = this.props

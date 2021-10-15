@@ -54,7 +54,7 @@ Menu.SubMenu = class Menu_SubMenu extends PureComponent {
       return React.cloneElement(child, {
         ...child.props,
         selectedKey: props.selectedKey,
-        itemKey: child.key,
+        itemkey: child.key,
       });
     });
     let arrowStyle = {
@@ -95,7 +95,7 @@ Menu.SubMenu = class Menu_SubMenu extends PureComponent {
   }
 };
 Menu.Item = function Menu_Item(props) {
-  let actived = props.itemKey == props.selectedKey;
+  let actived = props.itemkey == props.selectedKey;
   let iconStyle = {
     height: '100%',
     width: '100%',

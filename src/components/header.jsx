@@ -86,15 +86,15 @@ export default function IndexPage(props) {
             verticalAlign: 'top',
           }}
         >
-          <IconButton style={IconButtonStyle}>{''}</IconButton>
-          <IconButton style={IconButtonStyle}>{''}</IconButton>
-          <IconButton style={IconButtonStyle}>{''}</IconButton>
-          <IconButton style={IconButtonStyle}>{''}</IconButton>
+          <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
+          <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
+          <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
+          <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
           <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
-          <IconButton style={IconButtonStyle}>{''}</IconButton>
-          <IconButton style={IconButtonStyle}>{''}</IconButton>
+          <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
+          <IconButton style={IconButtonStyle} onClick={props.openSettings}>{''}</IconButton>
         </div>
-        <div style={{ display: 'inline-block', width: 48, height: '100%' }}>
+        <div style={{ display: 'inline-block', width: 48, height: '100%' }}  onClick={props.openSettings}>
           <IconButton style={IconButtonStyle}>
             <div
               style={{

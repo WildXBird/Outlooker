@@ -40,7 +40,6 @@ class ViewArticle extends PureComponent {
       }
     }
     this.makeMail = (item, currentArticle = {}) => {
-      console.log("currentArticle",currentArticle)
       let title = "出错了",
         content = "",
         infobox = "",
@@ -58,6 +57,14 @@ class ViewArticle extends PureComponent {
           paddingTop: 8,
         };
         if (typeof (item.title) === "string") {
+          const openLink = () => {
+            if (item.link) {
+              window.open(item.link)
+            } else {
+              message.info(`无法打开`);
+
+            }
+          }
           title = item.title
           content = <div dangerouslySetInnerHTML={{ __html: item.safeHTML }} />
           infobox = <div className={"ViewArticle-content-infobox"}>
@@ -81,23 +88,16 @@ class ViewArticle extends PureComponent {
             </div>
             <div className={"ViewArticle-content-infobox-action"}>
               <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
-                <LightButton style={buttonStyle}>{''}</LightButton>
+                <LightButton style={buttonStyle} onClick={openLink}>{''}</LightButton>
               </div>
               <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
-                <LightButton style={buttonStyle}>{''}</LightButton>
+                <LightButton style={buttonStyle} onClick={openLink}>{''}</LightButton>
               </div>
               <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
-                <LightButton style={buttonStyle}>{''}</LightButton>
+                <LightButton style={buttonStyle} onClick={openLink}>{''}</LightButton>
               </div>
               <div style={{ marginLeft: 0, paddingLeft: 10, height: '100%', display: 'inline-block', padding: '6px 4px', paddingRight: 2 }}>
-                <LightButton style={buttonStyle} onClick={() => {
-                  if (item.link) {
-                    window.open(item.link)
-                  } else {
-                    message.info(`无法打开`);
-
-                  }
-                }}>{''}</LightButton>
+                <LightButton style={buttonStyle} onClick={openLink}>{''}</LightButton>
               </div>
 
             </div>

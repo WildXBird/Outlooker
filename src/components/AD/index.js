@@ -36,7 +36,7 @@ let MenuAD = function MenuAD(props) {
 let RightAD = function RightAD(props) {
   if (localStorage.disableAD === "true") {
     return ""
-  }
+  } 
   return (
     <div className={"rightAD"}>
       {"广告已关闭"}
