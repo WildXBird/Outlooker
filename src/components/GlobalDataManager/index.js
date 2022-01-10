@@ -158,7 +158,7 @@ let updateRSS = function () {
     localStorage.RSSList = JSON.stringify([
       // { name: "Outlooker更新日志", rss: 'https://github.com/WildXBird/Outlooker/releases.atom', icon: "https://github.githubassets.com/pinned-octocat.svg", deleteable: false },
       { name: "IT之家", rss: 'https://www.ithome.com/rss/', icon: "https://www.ithome.com/img/t.png", deleteable: false },
-      { name: "V2EX", rss: "https://www.v2ex.com/index.xml", icon: "https://www.v2ex.com/static/icon-192.png", deleteable: false },
+      // { name: "V2EX", rss: "https://www.v2ex.com/index.xml", icon: "https://www.v2ex.com/static/icon-192.png", deleteable: false },
       { name: "GCORES", rss: "https://rss.mifaw.com/articles/5c8bb11a3c41f61efd36683e/5e305f9817d09d44934437c3", disabled: true },
     ])
   }
@@ -201,10 +201,22 @@ let updateRSS = function () {
         let articleList = [];
         let parser = new Parser();
         let rssLink = Subscription.rss
+        let rawRssLink = rssLink
         if (typeof (localStorage.Setting_Proxy) === "string" && localStorage.Setting_Proxy.length > 1) {
           rssLink = localStorage.Setting_Proxy + rssLink
         }
-        parser.parseURL(rssLink).then((rss) => {
+        parser.parseURL(rssLink).catch((error) => {
+          console.error("err1:", typeof (item), error)
+          if (typeof (item) === "object") {
+            message.error("无法下载：" + (item.name || item.rss || "错误源"));
+          } else {
+            message.error("无法下载: "+rawRssLink);
+          }
+          return "REJECT"
+        }).then((rss) => {
+          if (rss === "REJECT") {
+            return
+          }
           for (let item of rss.items) {
             item.published = new Date(item.pubDate).valueOf()
             item.html = (item.content || item.description)
@@ -229,7 +241,7 @@ let updateRSS = function () {
           progress += eachProgessCent
           Nprogress.set(progress)
         }).catch((error) => {
-          console.error(error)
+          console.error("err2:", typeof (error), error)
           if (typeof (item) === "object") {
             message.error("无法下载：" + (item.name || item.rss || "错误源"));
           } else {
