@@ -86,6 +86,16 @@ class Settings extends PureComponent {
         }}>{"强制中转"}</Checkbox>
         <p>{"仅在图片不能正常显示时启用"}</p>
         <br />
+        <br />
+        <Title level={5}>{"在列表中用随机信息覆盖头像/发信人"}</Title>
+        <Checkbox checked={localStorage.randomSenderInList === "true"} onChange={(event) => {
+          let value = event.target.checked
+          console.log("checked", value)
+          localStorage.randomSenderInList = value
+          this.forceUpdate()
+        }}>{"覆盖"}</Checkbox>
+        {/* <p>{"仅在图片不能正常显示时启用"}</p> */}
+        <br />
        
 
         <Button type="primary" onClick={() => { this.setState({ openRssList: true }) }}>{"管理订阅"}</Button>
