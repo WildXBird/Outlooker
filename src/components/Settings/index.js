@@ -68,6 +68,15 @@ class Settings extends PureComponent {
         }} />
         <br />
         <br />
+        <Title level={5}>{"列表中使用随机发信人"}</Title>
+        <Checkbox checked={localStorage.randomSenderInList === "true"} onChange={(event) => {
+          let value = event.target.checked
+          console.log("checked", value)
+          localStorage.randomSenderInList = value
+          this.forceUpdate()
+        }}>{"覆盖原始发信人"}</Checkbox>
+        <br />
+        <br />
         <Title level={5}>{"广告区域"}</Title>
         <Checkbox checked={localStorage.disableAD === "true"} onChange={(event) => {
           let value = event.target.checked
@@ -87,16 +96,7 @@ class Settings extends PureComponent {
         <p>{"仅在图片不能正常显示时启用"}</p>
         <br />
         <br />
-        <Title level={5}>{"在列表中用随机信息覆盖头像/发信人"}</Title>
-        <Checkbox checked={localStorage.randomSenderInList === "true"} onChange={(event) => {
-          let value = event.target.checked
-          console.log("checked", value)
-          localStorage.randomSenderInList = value
-          this.forceUpdate()
-        }}>{"覆盖"}</Checkbox>
-        {/* <p>{"仅在图片不能正常显示时启用"}</p> */}
-        <br />
-       
+
 
         <Button type="primary" onClick={() => { this.setState({ openRssList: true }) }}>{"管理订阅"}</Button>
         <br />

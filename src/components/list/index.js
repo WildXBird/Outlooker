@@ -5,6 +5,7 @@ import { AutoAvatar } from '../../components/Avatar';
 import { LightButton } from '../../components/Button';
 import { history } from 'umi';
 import { isRead } from '../GlobalDataManager';
+import RandomName from 'random-name';
 
 
 class List extends PureComponent {
@@ -31,13 +32,18 @@ class List extends PureComponent {
         <ul>
           {Array.from(this.state.articleList).map((item, id) => {
             let unread = !isRead(item.id);
-            if(unread){
-              unreadCount ++ 
+            if (unread) {
+              unreadCount++
             }
             let selected = false;
             let today = false;
             if (todayStartTS < item.published) {
               today = true;
+            }
+
+            if (this.isRandomSender()) {
+              item.author = this.randomSenderName()
+              item.avatarUrl = undefined
             }
             return (
               <div key={'outlooker-article-list-content' + id}>
@@ -53,16 +59,16 @@ class List extends PureComponent {
                 })()}
                 <a
                   className={`outlooker-article-list-content ${unread ? 'outlooker-article-list-content-unread' : ''} ${selected ? 'outlooker-article-list-content-selected' : ''}`}
-                //  onTouch
-                //   onTouchEnd={()=>{
-                //     let contentPseudoHash = btoa(encodeURI(item.link));
-                //     history.push("/mail/0/inbox/id/" + contentPseudoHash)
-                //   }}
+                  //  onTouch
+                  //   onTouchEnd={()=>{
+                  //     let contentPseudoHash = btoa(encodeURI(item.link));
+                  //     history.push("/mail/0/inbox/id/" + contentPseudoHash)
+                  //   }}
                   onClick={(event) => {
                     let contentPseudoHash = btoa(encodeURI(item.link));
                     history.push("/mail/0/inbox/id/" + contentPseudoHash)
                   }}
-                  // style={{cursor:'pointer'}}
+                // style={{cursor:'pointer'}}
                 >
                   <div className={'outlooker-article-list-layout-left'}>
                     <div
@@ -75,14 +81,14 @@ class List extends PureComponent {
                         ></div>
                       </div>
                       <div className={'outlooker-article-list-source'}>
-                        {function(){
-                          if(item.author === "WildXBird"){
+                        {function () {
+                          if (item.author === "WildXBird") {
                             return "Outlooker更新"
-                          }else{
+                          } else {
                             return item.author || item.dataSource
                           }
                         }()}
-                        
+
                       </div>
                       <div className={'outlooker-article-list-action'}>
                         <LightButton style={{ color: 'var(--neutralSecondary)' }}>{''}</LightButton>
@@ -128,12 +134,21 @@ class List extends PureComponent {
               </div>
             );
           })}
-          {function(){
+          {function () {
             localStorage.unreadCount = unreadCount
           }()}
         </ul>
       </div>
     );
+  }
+  isRandomSender() {
+    if(typeof(localStorage.randomSenderInList) === "undefined"){
+      localStorage.randomSenderInList = "true"
+    }
+    return localStorage.randomSenderInList === "true"
+  }
+  randomSenderName() {
+    return RandomName()
   }
 }
 export default List;
