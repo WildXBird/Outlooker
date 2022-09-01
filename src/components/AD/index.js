@@ -1,5 +1,6 @@
 import './this.less';
 import { ReactComponent as PremiumDiamond } from '../../assets/picture/svg/premium-diamond-01.svg';
+import AdSense from 'react-adsense';
 
 let MenuAD = function MenuAD(props) {
   return (
@@ -36,10 +37,44 @@ let MenuAD = function MenuAD(props) {
 let RightAD = function RightAD(props) {
   if (localStorage.disableAD === "true") {
     return ""
-  } 
+  }
+
+
+  let AD = "广告已关闭"
+  if (document.location.hostname === "reader.r6sground.cn") {
+    AD = <AdSense.Google
+      client='ca-pub-4417984338760431'
+      slot='1583965552'
+      style={{ width: "100%", height: "100%", float: 'left' }}
+      format=''
+    />
+  }
+
   return (
     <div className={"rightAD"}>
-      {"广告已关闭"}
+      {AD}
+    </div>
+  );
+};
+export const FeedAD = function RightAD(props) {
+  if (localStorage.disableFeedAD === "true") {
+    return ""
+  }
+
+
+  let AD = <div style={{marginLeft:36}}>{"广告已关闭"}</div>
+  if (document.location.hostname === "reader.r6sground.cn") {
+    AD = <AdSense.Google
+      client='ca-pub-4417984338760431'
+      slot='2778176464'
+      style={{ width: "100%", float: 'left' }}
+      format=''
+    />
+  }
+
+  return (
+    <div className={"FeedAD"}>
+      {AD}
     </div>
   );
 };

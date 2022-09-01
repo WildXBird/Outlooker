@@ -87,10 +87,21 @@ class Settings extends PureComponent {
         <Title level={5}>{"广告区域"}</Title>
         <Checkbox checked={localStorage.disableAD === "true"} onChange={(event) => {
           let value = event.target.checked
-          console.log("disableAD", value)
           localStorage.disableAD = value
+          if(value && localStorage.disableFeedAD === "true"){
+            localStorage.disableFeedAD = "false"
+          }
           this.forceUpdate()
-        }}>{"隐藏"}</Checkbox>
+        }}>{"关闭右侧广告区域"}</Checkbox>
+        <Checkbox checked={localStorage.disableFeedAD === "true"} onChange={(event) => {
+          let value = event.target.checked
+          localStorage.disableFeedAD = value
+          if(value && localStorage.disableAD === "true"){
+            localStorage.disableAD = "false"
+          }
+          this.forceUpdate()
+        }}>{"关闭信息流广告"}</Checkbox>
+        
         <br />
         <br />
         <Title level={5}>{"图片中转服务器"}</Title>
