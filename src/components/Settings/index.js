@@ -71,10 +71,17 @@ class Settings extends PureComponent {
         <Title level={5}>{"列表中使用随机发信人"}</Title>
         <Checkbox checked={localStorage.randomSenderInList === "true"} onChange={(event) => {
           let value = event.target.checked
-          console.log("checked", value)
           localStorage.randomSenderInList = value
           this.forceUpdate()
         }}>{"覆盖原始发信人"}</Checkbox>
+        <br />
+        <br />
+        <Title level={5}>{"默认不显示文章中的图片"}</Title>
+        <Checkbox checked={localStorage.defaultHidePicture === "true"} onChange={(event) => {
+          let value = event.target.checked
+          localStorage.defaultHidePicture = value
+          this.forceUpdate()
+        }}>{"默认以链接形式呈现"}</Checkbox>
         <br />
         <br />
         <Title level={5}>{"广告区域"}</Title>
@@ -89,7 +96,6 @@ class Settings extends PureComponent {
         <Title level={5}>{"图片中转服务器"}</Title>
         <Checkbox checked={localStorage.forceImgProxy === "true"} onChange={(event) => {
           let value = event.target.checked
-          console.log("checked", value)
           localStorage.forceImgProxy = value
           this.forceUpdate()
         }}>{"强制中转"}</Checkbox>

@@ -10,6 +10,7 @@ let Parser = require('rss-parser');
 let hTmL = (htmlInput = "", item) => {
   let domparser = new DOMParser();
   let artDoc = domparser.parseFromString(htmlInput, "text/html");
+  let DOMReplace = [];
   let DOMRemove = [];
   let treeWalker = document.createTreeWalker(artDoc);
   while (treeWalker.nextNode()) {
@@ -41,10 +42,14 @@ let hTmL = (htmlInput = "", item) => {
             } catch (error) { }
 
 
+            node.removeAttribute("height")
+            node.removeAttribute("width")
+
+
+            const nodeSrc = node.src || ""
             let needProxy = false
             try {
               let url = new URL(node.src)
-
               if (url.protocol == "http:") {
                 needProxy = true
               }
@@ -65,8 +70,27 @@ let hTmL = (htmlInput = "", item) => {
             } else {
               node.referrerPolicy = "no-referrer"
             }
-            node.removeAttribute("height")
-            node.removeAttribute("width")
+            console.log("nodeSrc", nodeSrc)
+            // if (nodeSrc.indexOf("52bbeca3" !== 0)) {
+            //   debugger
+            // }
+            ///判断是否需要隐藏图片
+            if (localStorage.defaultHidePicture === "true") {
+              const element = document.createElement("a")
+              element.href = nodeSrc
+              element.target = "_blank"
+              element.innerHTML = "[图片]"
+              element.rel = "noreferrer nofollow"
+              DOMReplace.push([node, element])
+              // console.log(" node.outerHTML", node.outerHTML)
+              // console.log(" node", node)
+              // node.outerHTML = element.outerHTML
+              // console.log(" node.outerHTML", node.outerHTML)
+              // console.log(" node", node)
+              // break;
+            }
+
+
           }
           break;
         case "A":
@@ -100,6 +124,12 @@ let hTmL = (htmlInput = "", item) => {
     }
 
   }
+  DOMReplace.forEach(function (node) {
+    const before = node.shift()
+    const after = node.shift()
+    before.parentNode.insertBefore(after, before)
+    before.parentNode.removeChild(before);
+  });
   DOMRemove.forEach(function (node) {
     node.parentNode.removeChild(node);
   });
@@ -210,7 +240,7 @@ let updateRSS = function () {
           if (typeof (item) === "object") {
             message.error("无法下载：" + (item.name || item.rss || "错误源"));
           } else {
-            message.error("无法下载: "+rawRssLink);
+            message.error("无法下载: " + rawRssLink);
           }
           return "REJECT"
         }).then((rss) => {
