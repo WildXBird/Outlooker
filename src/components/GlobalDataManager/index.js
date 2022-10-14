@@ -177,6 +177,7 @@ let getDataDiskSize = function () {
   let size = 0;
   for (let item in localStorage) {
     if (window.localStorage.hasOwnProperty(item)) {
+      size += item.length;
       size += window.localStorage.getItem(item).length;
     }
   }
