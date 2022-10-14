@@ -189,7 +189,7 @@ let updateRSS = function () {
     localStorage.RSSList = JSON.stringify([
       // { name: "Outlooker更新日志", rss: 'https://github.com/WildXBird/Outlooker/releases.atom', icon: "https://github.githubassets.com/pinned-octocat.svg", deleteable: false },
       { name: "IT之家", rss: 'https://www.ithome.com/rss/', icon: "https://www.ithome.com/img/t.png", deleteable: false },
-      // { name: "V2EX", rss: "https://www.v2ex.com/index.xml", icon: "https://www.v2ex.com/static/icon-192.png", deleteable: false },
+      { name: "V2EX", rss: "https://www.v2ex.com/index.xml", icon: "https://www.v2ex.com/static/icon-192.png", deleteable: false,disabled: true },
       { name: "GCORES", rss: "https://rss.mifaw.com/articles/5c8bb11a3c41f61efd36683e/5e305f9817d09d44934437c3", disabled: true },
     ])
   }
